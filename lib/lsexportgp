@@ -1,0 +1,42 @@
+#!/bin/ksh
+function lsexportgp {
+   # -l provides a long listing
+   # default is to simply print a space delimited string of GPIO numbers
+   # currently exported.
+   #
+   # it would be cool to have an array that could be called via something like
+   # EXPORTED_GPIOS=$(lsexportgp -a) # the -a for array :-)
+   # resulting in something like:
+   # EXPORTED_GPIOS=(
+   #    ["7"]=(
+   #        ["direction"]="out"
+   #        ["active_low"]="0"
+   #        ["value"]="1"
+   #        )
+   #    ["21"]=(
+   #        ["direction"]="in"
+   #        ["active_low"]="1"
+   #        ["value"]="0"
+   #        )
+   #    )
+
+   BASE=/sys/class/gpio
+   for g_path in $(ls -d ${BASE}/gpio[0-9]*); do
+       GPIO=$(basename ${g_path})
+       GPIO=${GPIO/[[:alpha:]]//}
+       DIRECTION=$(<${g_path}/direction)
+       ACTIVE_LOW=$(<${g_path}/active_low)
+       VALUE=$(<${g_path}/value)
+
+       EXPORTED_GPIOS=(
+            ["${GPIO}"]=(
+            ["direction"]=${DIRECTION}
+            ["value"]=${VALUE}
+            ["active_low"]=${ACTIVE_LOW}
+            )
+        )
+    done # build the data structure
+
+   print "${!EXPORTED_GPIOS}"
+
+}
