@@ -1,1 +1,53 @@
 #!/bin/ksh
+
+#
+function exportg {
+    USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
+    USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>]"
+    USAGE+="[-copyright?2015 Joshua Taylor]"
+    USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
+    USAGE+="[+DESCRIPTION?\aexporg\a exports a gpio pin so that it can be read or written via  the SYSFS]"
+    USAGE+="[g:gpio?export pin number]"
+    USAGE+="[d:direction]:[direction:=out?set the GPIO direction.]{
+        [in?sets GPIO to input for read.]
+        [out?set GPIO to output for write (default)]
+    }"
+    USAGE+="[p:pull?set pull-up or pull-down. NOTE not all pins have pull-ups/downs.]{
+        [up?sets the internal pull-up resister]
+        [down?sets the internal pull-down resister]
+    }"
+
+    DIRECTION=out
+
+    while getopts "${USAGE}" O
+    do
+        case ${O} in
+            g)
+                PIN_NUM=${OPTARG}
+                ;;
+            d)
+                DIRECTION=${OPTARG}
+                ;;
+            p)
+                if [[ ${OPTARG} =~ (U|u) ]]
+                then
+                    PULLUP=1
+                    PULLDOWN=0
+                elif [[ ${OPTARG} =~ (D|d) ]]; then
+                    PULLUP=0
+                    PULLDOWN=1
+                fi
+                ;;
+            *)
+                print -u2 "$0: -g [pin number] -d [direction] [-p u|d]"
+                return 1
+                ;;
+            :)
+                print -u2 "$0: ${OPTARG} requires an argument."
+                return 1
+                ;;
+
+            esac
+            shift $OPTIND-1
+    done
+}
