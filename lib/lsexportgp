@@ -37,6 +37,6 @@ function lsexportgp {
         )
     done # build the data structure
 
-   print "${!EXPORTED_GPIOS}"
+   print "${!EXPORTED_GPIOS[@]}"
 
 }
