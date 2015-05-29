@@ -79,6 +79,9 @@ function exportgp {
 
     if [[ ${exported} == 1 && -n ${DIRECTION} ]]; then
         echo "${PIN_NUM}" > ${sysfs}/export
+		until [[ -f ${gpio}/direction ]]; do
+			sleep 0.1
+		done
         echo "${DIRECTION}" > ${gpio}/direction
         #${set_direction} ${PIN_NUM}
     elif [[ ${exported} == 0  && (${DIRECTION} != ${cur_direction}) ]]; then
