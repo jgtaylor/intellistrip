@@ -69,23 +69,12 @@ function exportgp {
     gpio="${sysfs}/gpio${PIN_NUM}"
     # check for already exported ... 0 is true
     [[ -L ${gpio} ]] && exported=0 || exported=1 # 0=TRUE (isExported)
-    # if it's exported, check if we care about its current setup
-    if [[ -n ${DIRECTION} && ${exported}=0 ]]; then
-        # check what its at now.
-        cur_direction=$(cat ${gpio}/direction)
-    else
-        # don't care, set default
-        DIRECTION=out
-    fi
 
     if [[ ${exported} == 1 && -n ${DIRECTION} ]]; then
         echo "${PIN_NUM}" > ${sysfs}/export
-		until [[ -f ${gpio}/direction ]]; do
-			sleep 0.1
-		done
-        echo "${DIRECTION}" > ${gpio}/direction
+		[[ -f ${gpio}/direction ]] && echo "${DIRECTION}" > ${gpio}/direction
         #${set_direction} ${PIN_NUM}
-    elif [[ ${exported} == 0  && (${DIRECTION} != ${cur_direction}) ]]; then
+    elif [[ ${exported} == 0  && ${DIRECTION} != $(cat ${gpio}/direction) ]]; then
         echo "${DIRECTION}" > ${gpio}/direction
         #${set_direction} ${PIN_NUM}
     elif [[ ${exported} == 1 && -z ${DIRECTION} ]]; then
