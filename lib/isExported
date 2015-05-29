@@ -1,5 +1,6 @@
 #!/bin/ksh
 function isExported {
+set -o xtrace
     VERSION=0.1
 
     USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'

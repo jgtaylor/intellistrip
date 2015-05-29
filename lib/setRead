@@ -1,5 +1,6 @@
 #!/bin/ksh
 function setRead {
+set -o xtrace
     VERSION=0.1
 
     USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
@@ -23,5 +24,5 @@ function setRead {
 
     [[ -z ${PIN_NUM} ]] && return 1
     gpio=/sys/class/gpio/gpio${PIN_NUM}
-    [[ $(isExported) ]] && echo "in" > ${gpio}/direction || return 1
+    isExported -g ${PIN_NUM} && echo "in" > ${gpio}/direction || return $?
 }
