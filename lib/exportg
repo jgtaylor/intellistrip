@@ -22,7 +22,7 @@ function exportg {
 
 	#DEFAULTS
 
-    DIRECTION=out
+    #DIRECTION=out
 	PULLUP=0 PULLDOWN=0
 	PIN_NUM=
 
@@ -34,6 +34,14 @@ function exportg {
                 ;;
             d)
                 DIRECTION=${OPTARG}
+                case ${DIRECTION} in
+                    in)
+                        set_direction="set_read"
+                        ;;
+                    out)
+                        set_direction="set_write"
+                        ;;
+                esac
                 ;;
             p)
                 if [[ ${OPTARG} =~ (U|u) ]]
@@ -57,4 +65,31 @@ function exportg {
             esac
             shift $OPTIND-1
     done
+
+    sysfs="/sys/class/gpio"
+    gpio="${sysfs}/gpio${PIN_NUM}"
+    # check for already exported ... 0 is true
+    [[ -L ${gpio} ]] && exported=0 || exported=1
+    # if it's exported, check if we care about its current setup
+    if [[ -n ${DIRECTION} && ${exported}=0 ]]; then
+        # check what its at now.
+        cur_direction=$(cat ${gpio}/direction)
+    else
+        # don't care, set default
+        DIRECTION=out
+    fi
+
+    if [[ ${exported} == 1 && -n ${DIRECTION} ]]; then
+        echo "${PIN_NUM}" > ${sysfs}/export
+        echo "${DIRECTION}" > ${gpio}/direction
+        #${set_direction} ${PIN_NUM}
+    elif [[ ${exported} == 0  && (${DIRECTION} != ${cur_direction}) ]]; then
+        echo "${DIRECTION}" > ${gpio}/direction
+        #${set_direction} ${PIN_NUM}
+    elif [[ ${exported} == 1 && -z ${DIRECTION} ]]; then
+        echo "${PIN_NUM}" > ${sysfs}/export
+        echo "out" > ${gpio}/direction
+        #${set_direction} ${PIN_NUM}
+    fi
+
 }
