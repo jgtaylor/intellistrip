@@ -20,7 +20,9 @@ function lsexportgp {
    #        )
    #    )
 
-   BASE=/sys/class/gpio
+   typeset BASE=/sys/class/gpio
+   typeset GPIO DIRECTION ACTIVE_LOW VALUE
+   typeset -A EXPORTED_GPIOS
    for g_path in $(ls -d ${BASE}/gpio[0-9]*); do
        GPIO=$(basename ${g_path})
        GPIO=${GPIO//[[:alpha:]]}
