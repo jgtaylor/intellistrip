@@ -23,7 +23,7 @@ function lsexportgp {
    BASE=/sys/class/gpio
    for g_path in $(ls -d ${BASE}/gpio[0-9]*); do
        GPIO=$(basename ${g_path})
-       GPIO=${GPIO/[[:alpha:]]//}
+       GPIO=${GPIO/[[:alpha:]].*/}
        DIRECTION=$(<${g_path}/direction)
        ACTIVE_LOW=$(<${g_path}/active_low)
        VALUE=$(<${g_path}/value)
