@@ -23,5 +23,5 @@ function setRead {
 
     [[ -z ${PIN_NUM} ]] && return 1
     gpio=/sys/class/gpio/gpio${PIN_NUM}
-    [[ $(isExported) ]] && echo "out" > ${gpio}/direction || return 1
+    isExported -g ${PIN_NUM} && echo "out" > ${gpio}/direction || return $?
 }
