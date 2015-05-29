@@ -17,6 +17,7 @@
 
 function exportgp {
 #	set -o xtrace
+	typeset VERSION USAGE PULLUP PULLDOWN PIN_NUM 
     VERSION=0.1
 
     USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
@@ -26,9 +27,9 @@ function exportgp {
     USAGE+="[+NAME?exportg --- makes a gpio pin available for access]"
     USAGE+="[+DESCRIPTION?$0 exports a gpio pin so that it can be read or written via SYSFS]"
     USAGE+="[g:gpio]#[gpio?the broadcom GPIO pin number]"
-    USAGE+="[d:direction]:[DIRECTION:=out?set the GPIO direction.]{
-        [in?sets GPIO to input for read.]
-        [out?set GPIO to output for write (default)]
+    USAGE+="[d:direction?Direction]:{
+        [DIRECTION=in?sets GPIO to input for read.]
+        [DIRECTION=out?set GPIO to output for write (default)]
     }"
     USAGE+="[p:pull?set pull-up or pull-down. NOTE not all pins have pull-ups/downs.]{
         [up?sets the internal pull-up resister]
@@ -50,11 +51,11 @@ function exportgp {
             d)
                 DIRECTION=${OPTARG}
                 case ${DIRECTION} in
-                    in)
-                        set_direction="set_read"
+                    "in")
+                        typeset set_direction="set_read"
                         ;;
-                    out)
-                        set_direction="set_write"
+                    "out")
+                        typeset set_direction="set_write"
                         ;;
                 esac
                 ;;
@@ -78,11 +79,10 @@ function exportgp {
                 ;;
 
             esac
-            shift $OPTIND-1
     done
 
-    sysfs="/sys/class/gpio"
-    gpio="${sysfs}/gpio${PIN_NUM}"
+    typeset sysfs="/sys/class/gpio" gpio="${sysfs}/gpio${PIN_NUM}" exported
+
     # check for already exported ... 0 is true
     [[ -L ${gpio} ]] && exported=0 || exported=1 # 0=TRUE (isExported)
 
