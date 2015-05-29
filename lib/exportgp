@@ -1,6 +1,4 @@
 #!/bin/ksh
-
-#
 function exportg {
     VERSION=0.1
 
