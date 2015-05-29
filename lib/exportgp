@@ -7,8 +7,8 @@ function exportgp {
     USAGE+="[-copyright?2015 Joshua Taylor]"
     USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
     USAGE+="[+NAME?exportg --- makes a gpio pin available for access]"
-    USAGE+="[+DESCRIPTION?exporg exports a gpio pin so that it can be read or written via  the SYSFS]"
-    USAGE+="[g:gpio]#[?the broadcom GPIO pin number]"
+    USAGE+="[+DESCRIPTION?$0 exports a gpio pin so that it can be read or written via the SYSFS]"
+    USAGE+="[g:gpio]#[gpio?the broadcom GPIO pin number]"
     USAGE+="[d:direction]:[direction:=out?set the GPIO direction.]{
         [in?sets GPIO to input for read.]
         [out?set GPIO to output for write (default)]
