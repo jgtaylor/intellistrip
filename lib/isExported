@@ -1,0 +1,25 @@
+#!/bin/ksh
+function isExported {
+    VERSION=0.1
+
+    USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
+    USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>]"
+    USAGE+="[-copyright?2015 Joshua Taylor]"
+    USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
+    USAGE+="[+NAME?$0 --- Check if a given GPIO pin is exported]"
+    USAGE+="[+DESCRIPTION?$0 checks to see if a particular GPIO pin is exported for use.\nReturns 0 on true, 1 on false.]"
+    USAGE+="[g:gpio]#[gpio?the broadcom GPIO pin number]"
+
+    while getopts "${USAGE}" O
+    do
+        case ${O} in
+            g) PIN_NUM=${OPTARG}
+                ;;
+            :) print -u2 "$0: -g pin_number"
+                return 1
+                ;;
+        esac
+    done
+
+    [[ -L /sys/class/gpio/gpio${PIN_NUM} ]] && return 0 || return 1
+}
