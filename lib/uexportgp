@@ -1,0 +1,25 @@
+#!/bin/ksh
+function unexportgp {
+    VERSION=0.1
+
+    USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
+    USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>]"
+    USAGE+="[-copyright?2015 Joshua Taylor]"
+    USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
+    USAGE+="[+NAME?exportg --- makes a gpio pin unavailable for access]"
+    USAGE+="[+DESCRIPTION?$0: Unexports a gpio pin so that it can be read or written via the SYSFS]"
+    USAGE+="[g:gpio]#[gpio?the broadcom GPIO pin number]"
+
+    while getopts "${USAGE}" O
+    do
+        case ${O} in
+            g) PIN_NUM=${OPTARG}
+                ;;
+            :) print -u2 "$0: -g pin_number"
+                return 1
+                ;;
+        esac
+    done
+
+    [[ -n ${PIN_NUM} ]] && echo ${PIN_NUM} > /sys/class/gpio/unexport
+}
