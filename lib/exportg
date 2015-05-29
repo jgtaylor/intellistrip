@@ -6,6 +6,7 @@ function exportg {
     USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>]"
     USAGE+="[-copyright?2015 Joshua Taylor]"
     USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
+    USAGE+="[+NAME?exportg --- makes a gpio pin available for access]"
     USAGE+="[+DESCRIPTION?\aexporg\a exports a gpio pin so that it can be read or written via  the SYSFS]"
     USAGE+="[g:gpio?export pin number]"
     USAGE+="[d:direction]:[direction:=out?set the GPIO direction.]{
