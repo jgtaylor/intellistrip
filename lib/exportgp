@@ -63,11 +63,12 @@ function exportgp {
             esac
             shift $OPTIND-1
     done
+	set -o xtrace
 
     sysfs="/sys/class/gpio"
     gpio="${sysfs}/gpio${PIN_NUM}"
     # check for already exported ... 0 is true
-    [[ -L ${gpio} ]] && exported=0 || exported=1
+    [[ -L ${gpio} ]] && exported=0 || exported=1 # 0=TRUE (isExported)
     # if it's exported, check if we care about its current setup
     if [[ -n ${DIRECTION} && ${exported}=0 ]]; then
         # check what its at now.
