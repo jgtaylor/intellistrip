@@ -2,7 +2,7 @@
 
 #
 function exportg {
-#set -o xtrace
+    VERSION=0.1
 
     USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
     USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>]"
