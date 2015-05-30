@@ -19,26 +19,66 @@ function lsexportgp {
    #        ["value"]="0"
    #        )
    #    )
+   USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
+   USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>.]"
+   USAGE+="[-copyright?2015 Joshua Taylor and anyone that adds to it.]"
+   USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
+   USAGE+="[+NAME?$0 --- Lists details about the various GPIO pins.]"
+   USAGE+="[+DESCRIPTION?$0 produces a few forms of output for exported GPIO pins.]"
+   USAGE+="[a?produces a ksh associative array with the GPIO numbers as the keys, and settings based on their associated properties in the /sys/class/gpio/* filesystem.]"
+   USAGE+="[l?produces longer listing with each GPIO on its own line, with its properties space separated.]"
+
+   while getopts "${USAGE}" O; do
+       case ${O} in
+        a)
+            typeset output="ksh"
+            ;;
+        l)
+            typeset output="long"
+            ;;
+        *)
+            unset output
+            ;;
+        esac
+    done
+
+
+
+
 
    typeset BASE=/sys/class/gpio
    typeset GPIO DIRECTION ACTIVE_LOW VALUE
    typeset -A EXPORTED_GPIOS
-   for g_path in $(ls -d ${BASE}/gpio[0-9]*); do
-       GPIO=$(basename ${g_path})
-       GPIO=${GPIO//[[:alpha:]]}
-       DIRECTION=$(<${g_path}/direction)
-       ACTIVE_LOW=$(<${g_path}/active_low)
-       VALUE=$(<${g_path}/value)
+   typeset -a e_gpios=( $(ls -d ${BASE}/gpio[0-9]* 2>/dev/null) )
+   if [[ -n ${e_gpios} ]]; then
+       for g_path in ${e_gpios[@]}; do
+           GPIO=$(basename ${g_path})
+           GPIO=${GPIO//[[:alpha:]]}
+           DIRECTION=$(<${g_path}/direction)
+           ACTIVE_LOW=$(<${g_path}/active_low)
+           VALUE=$(<${g_path}/value)
 
-       EXPORTED_GPIOS+=(
-            ["${GPIO}"]=(
-            	["direction"]=${DIRECTION}
-            	["value"]=${VALUE}
-            	["active_low"]=${ACTIVE_LOW}
+           EXPORTED_GPIOS+=(
+                ["${GPIO}"]=(
+                    ["direction"]=${DIRECTION}
+            	    ["value"]=${VALUE}
+            	    ["active_low"]=${ACTIVE_LOW}
+                )
             )
-        )
-    done # build the data structure
+        done # build the data structure
+    else
+        return 1
+    fi
 
-   print "${!EXPORTED_GPIOS[@]}"
+    if[[ -z ${output}]]; then
+        print "${!EXPORTED_GPIOS[@]}"
+    elif [[ ${output} == "ksh" ]]; then
+        print -v EXPORTED_GPIOS
+    elif [[ ${output} == "long" ]]; then
+        for pin in ${!EXPORTED_GPIOS[@]}; do
+            typeset -n t=EXPORTED_GPIOS[pin]
+            printf "%s %s %s %s\n" ${pin} ${t["direction"]} ${t["value"]} ${t["active_low"]}
+        done
+    fi
 
 }
