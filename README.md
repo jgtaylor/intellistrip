@@ -11,7 +11,8 @@ depending on what it's monitoring, it can turn things on and off.
 
 the goal is to use it for winter gardens, green houses or other automation projects.
 
- THINGS TO NOTE: this will eventually work on (hopefully) all ARM architecture
+###THINGS TO NOTE:
+ this will eventually work on (hopefully) all ARM architecture
  systems. That includes Beagle Bone Black, probably an Arduino YUN [but I don't
  have one], and the Raspberry Pi, along with others.
 
