@@ -17,14 +17,14 @@
 
 function exportgp {
 #	set -o xtrace
-	typeset VERSION USAGE PULLUP PULLDOWN PIN_NUM 
+	typeset VERSION USAGE PULLUP PULLDOWN PIN_NUM
     VERSION=0.1
 
     USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
     USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>.]"
     USAGE+="[-copyright?2015 Joshua Taylor and anyone that adds to it.]"
     USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
-    USAGE+="[+NAME?exportg --- makes a gpio pin available for access]"
+    USAGE+="[+NAME?$0 --- makes a gpio pin available for access]"
     USAGE+="[+DESCRIPTION?$0 exports a gpio pin so that it can be read or written via SYSFS]"
     USAGE+="[g:gpio]#[gpio?the broadcom GPIO pin number]"
     USAGE+="[d:direction?Direction]:{
