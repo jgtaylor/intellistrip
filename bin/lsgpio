@@ -19,13 +19,14 @@ USAGE+="[g:gpio]#[gpio?This is the GPIO number of the particular pin to be queri
 USAGE+="[j:json?This option produces output suitable for JSON variables.]"
 USAGE+="[t:table?This option produces an ascii table output.]"
 
-while getopts "${USAGE}" $O; do
+while getopts "${USAGE}" O ; do
     case $O in
         a)
             output="all"
             ;;
         g)
             gpio_pin="${OPTARG}"
+			;;
         j)
             output="json"
             ;;
