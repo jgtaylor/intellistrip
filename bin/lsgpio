@@ -1,0 +1,36 @@
+#!/bin/ksh
+#
+FPATH=/home/pi/intellistrip/lib
+VERSION=0.1
+
+USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
+USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>.]"
+USAGE+="[-copyright?2015 Joshua Taylor and anyone that adds to it.]"
+USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
+USAGE+="[+NAME?$0 --- Lists details about the various GPIO pins.]"
+USAGE+="[+DESCRIPTION?$0 provides various levels and outputs for the GPIOs on a"
+USAGE+="system. These are accessed via the /sys/class/gpio filesystem in Linux."
+USAGE+="\nThe default for $0 is to only list a space separated set of numbers, "
+USAGE+="where each number coresponds to a named GPIO pin."
+USAGE+="\nOutput format can be modified via the --all, --json, and --table options. "
+USAGE+="Output for a specific GPIO pin can be produced via the --gpio option.]"
+USAGE+="[a:all?Provides details on all exported GPIO pins, inlcuding GPIO pin number and current direction.]"
+USAGE+="[g:gpio]#[gpio?This is the GPIO number of the particular pin to be queried.]"
+USAGE+="[j:json?This option produces output suitable for JSON variables.]"
+USAGE+="[t:table?This option produces an ascii table output.]"
+
+while getopts "${USAGE}" $O; do
+    case $O in
+        a)
+            output="all"
+            ;;
+        g)
+            gpio_pin="${OPTARG}"
+        j)
+            output="json"
+            ;;
+        t)
+            output="table"
+            ;;
+    esac
+done
