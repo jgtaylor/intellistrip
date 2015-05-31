@@ -36,4 +36,31 @@ while getopts "${USAGE}" O ; do
     esac
 done
 
-
+eval GPIOS=$(lsexportgp -a)
+if [[ -n ${gpio_pin} && $(isExported -g ${gpio_pin}; print $? ) == 1 ]]; then
+	print -u2 "GPIO_${gpio_pin} is not exported for use."
+	exit 1
+fi
+	
+case ${output} in
+	"all")
+		if [[ -n ${gpio_pin} ]]; then
+			nameref t=GPIOS[$gpio_pin]
+			printf "Name: GPIO_%s\n\tDirection: %s\n\tValue: %s\n" ${gpio_pin} ${t["direction"]} ${t["value"]}
+		else
+			for pin in ${!GPIOS[@]}; do
+				nameref t=GPIOS[$pin]
+				printf "Name: GPIO_%s\n\tDirection: %s\n\tValue: %s\n" ${pin} ${t["direction"]} ${t["value"]}
+			done
+		fi
+		;;
+	"json")
+		print -j ${GPIOS[@]}
+		;;
+	"table")
+		print "This would be a table..."
+		;;
+	"default"|*)
+		print "${!GPIOS[@]}"
+		;;
+esac
