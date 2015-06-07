@@ -1,0 +1,50 @@
+#!/bin/ksh
+
+function writegp {
+
+	typeset VERSION USAGE PIN_NUM VALUE
+    VERSION=0.1
+
+    USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
+    USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>.]"
+    USAGE+="[-copyright?2015 Joshua Taylor and anyone that adds to it.]"
+    USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
+    USAGE+="[+NAME?$0 --- makes a gpio pin available for access]"
+    USAGE+="[+DESCRIPTION?$0 exports a gpio pin so that it can be read or written via SYSFS]"
+    USAGE+="[g:gpio]#[gpio?the broadcom GPIO pin number]"
+
+	#DEFAULTS
+
+    #DIRECTION=out
+	PIN_NUM=
+
+    while getopts "${USAGE}" O
+    do
+        case ${O} in
+            g)
+                PIN_NUM=${OPTARG}
+                ;;
+			0|1)
+				VALUE=${O}
+				;;
+            *)
+                print -u2 "$0: -g [pin number] -d [direction] [-p u|d]"
+                return 1
+                ;;
+            :)
+                print -u2 "$0: ${OPTARG} requires an argument."
+                return 1
+                ;;
+
+            esac
+    done
+
+    typeset sysfs="/sys/class/gpio" gpio="${sysfs}/gpio${PIN_NUM}" 
+	typeset direction=$(< ${gpio}/direction)
+	if [[ ${direction} != "out" ]]; then
+		setWrite -g ${PIN_NUM}
+		print "${VALUE}" > ${gpio}/value
+	else
+		print "${VALUE}" > ${gpio}/value
+	fi
+}
