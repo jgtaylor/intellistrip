@@ -12,6 +12,7 @@ function writegp {
     USAGE+="[+NAME?$0 --- makes a gpio pin available for access]"
     USAGE+="[+DESCRIPTION?$0 exports a gpio pin so that it can be read or written via SYSFS]"
     USAGE+="[g:gpio]#[gpio?the broadcom GPIO pin number]"
+#    USAGE+="[a:action]#[Action?0 or 1]"
 
 	#DEFAULTS
 
@@ -24,11 +25,8 @@ function writegp {
             g)
                 PIN_NUM=${OPTARG}
                 ;;
-			0|1)
-				VALUE=${O}
-				;;
             *)
-                print -u2 "$0: -g [pin number] -d [direction] [-p u|d]"
+                print -u2 "$0: -g [pin number] [-a 0|1]"
                 return 1
                 ;;
             :)
@@ -38,6 +36,10 @@ function writegp {
 
             esac
     done
+	if [[ -n $3 ]]
+	then
+		VALUE=$3
+	fi
 
     typeset sysfs="/sys/class/gpio" gpio="${sysfs}/gpio${PIN_NUM}" 
 	typeset direction=$(< ${gpio}/direction)

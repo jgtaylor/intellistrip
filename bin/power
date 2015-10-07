@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-FPATH=/home/pi/intellistrip/lib
+FPATH=~/intellistrip/lib
 VERSION=0.1
 
 USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
@@ -8,21 +8,30 @@ USAGE+="[-author?Joshua Taylor <joshua dot taylor at sub dash verses dot org>.]"
 USAGE+="[-copyright?2015 Joshua Taylor and anyone that adds to it.]"
 USAGE+="[-license?https://www.gnu.org/licenses/gpl-3.0.txt]"
 USAGE+="[+NAME?$0 --- Lists details about the various GPIO pins.]"
-USAGE+="[+DESCRIPTION?$0 provides various levels and outputs for the GPIOs on a"
-USAGE+="system. These are accessed via the /sys/class/gpio filesystem in Linux."
-USAGE+="\nThe default for $0 is to only list a space separated set of numbers, "
-USAGE+="where each number coresponds to a named GPIO pin."
-USAGE+="\nOutput format can be modified via the --all, --json, and --table options. "
-USAGE+="Output for a specific GPIO pin can be produced via the --gpio option.]"
-USAGE+="[a:all?Provides details on all exported GPIO pins, inlcuding GPIO pin number and current direction.]"
+USAGE+="[+DESCRIPTION?$0 controls a relay connected via GPIO pins.]"
 USAGE+="[p:port]#[port?This is the port on the intellistrip.]"
+USAGE+="[a:action?Action]:{
+        [ACTION=on?Turns on the relay.]
+        [ACTION=off?Turns off the relay]
+}"
 
 while getopts "${USAGE}" O ; do
     case $O in
         p)
             port_num="${OPTARG}"
             ;;
+		a)
+			if [[ "${OPTARG}" =~ (on|On|ON|oN) ]]
+			then
+				action=1
+			else
+				action=0
+			fi
+			;;
     esac
 done
 
-
+if (( $(isExported -g ${port_num}; echo $?) == 0 ))
+then
+	writegp -g ${port_num}  ${action} 
+fi
