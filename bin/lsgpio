@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-FPATH=/home/pi/intellistrip/lib
+FPATH=~/intellistrip/lib
 VERSION=0.1
 
 USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
@@ -59,11 +59,11 @@ case ${output} in
 		;;
 	"table")
 		print "This would be a table..."
-        sorted_keys=( $(printf "%s" ${!GPIOS[@]}) ) # sorted_keys[0]=lowest GPIO pin number.
+        sorted_keys=( $(printf "%s " ${!GPIOS[@]}) ) # sorted_keys[0]=lowest GPIO pin number.
         printf "%10ls%12ls%10ls%12ls\n" "NAME" "DIRECTION" "VALUE" "ACTIVE LOW"
         for i in ${sorted_keys[@]}; do
-            nameref t=GPIOS[${sorted_keys[$i]}]
-            printf "%10ls%12ls%10ls%12ls\n" ${sorted_keys[$i]} ${t["direction"]} ${t["value"]} ${t[active_low]}
+            nameref t=GPIOS[$i]
+            printf "%10ls%12ls%10ls%12ls\n" "GPIO_${i}" ${t["direction"]} ${t["value"]} ${t[active_low]}
         done
 		;;
 	"default"|*)
