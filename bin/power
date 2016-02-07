@@ -34,4 +34,6 @@ done
 if (( $(isExported -g ${port_num}; echo $?) == 0 ))
 then
 	writegp -g ${port_num}  ${action} 
+else
+	exportgp -g ${port_num} && writegp -g ${port_num} ${action} || print -u2 "Error exporting ${port_num}"
 fi
