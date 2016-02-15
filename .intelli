@@ -1,0 +1,7 @@
+PS1='${USER} - BBB ${PWD} # '
+I_BASE=/root/intellistrip
+FPATH=${I_BASE}/lib
+PATH=${PATH}:/${I_BASE}/bin
+NODE_PATH=/usr/lib/node_modules
+export I_BASE FPATH PATH PS1 NODE_PATH
+alias ls='ls -FaG --color=always'

@@ -1,0 +1,40 @@
+#!/bin/ksh
+
+function pwm_init {
+	# ARGS: pin number, frequency, duty cycle
+	# plan =>
+	# -p pin should be one of: p8.1, p8.01, p8_1, p8_01 ... 
+	# -f frequency -> parsed for last character: k,m, converted to nano-seconds
+	# -d duty cycle -> should be a percentage, but if >=101, used literally.
+	# -s [sign]polarity -> (p) = 1, (n) = 0 ; optional arguments, default is 1
+	#
+	# errors =>
+	# bad pin: doesn't exist, isn't pwm, etc.
+	# bad freq: too short, too long ... etc.
+	# bad duty: > frequency if literal, <0 in all cases.
+	#
+	# functions to use:
+	# 	pwm_reset pwm number[0-7]  -> sets everything to default (off).
+	#	pwm_duty [-p x%|literal]
+	#	pwm_freq 1...10k
+	#	pwm_run 0|1
+	#	pwm_pol 0|1
+	#
+
+	typeset -A errors
+	typeset pin
+	typeset freq
+	typeset duty
+	typeset pol=1
+
+
+
+
+
+	if (( ${#ERRORS[@]} == 0 ))
+	then
+		return 0
+	else
+		#print errors ...
+		return ${#ERRORS[@]}
+	fi
