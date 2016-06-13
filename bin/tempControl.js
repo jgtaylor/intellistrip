@@ -24,7 +24,6 @@ function startup() {
 function fanspeed(nfspd) {
 	var floor = 0.1;
 		if ( fspd !== nfspd ) { 
-			console.log(new Date+" setting Fanspeed...");
 			if ( nfspd < floor ) {
 				fspd = floor;
 			} else {
