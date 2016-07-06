@@ -19,7 +19,6 @@ function startup() {
 	console.log(new Date+" INIT: Startup");
 	b.pinMode(fanPWM, b.ANALOG_OUT, 4);
 	for ( var X in powerPins ) {
-		console.log("DEBUG: X="+powerPins[X]);
 		b.pinMode(powerPins[X], b.OUTPUT);
 	}
 	var fanPower = powerPins[6];
@@ -68,20 +67,26 @@ function getDHT() {
 }
 
 function lightsOn(powerPin) {
-	var pinStatus = b.getPinMode(powerPin, function(x) { return x });
-	if (pinStatus.direction !== b.OUTPUT) {
-		b.pinMode(powerPin, b.OUTPUT);
-	}
-	b.digitalWrite(powerPin, b.HIGH);
-	ceiling = 0.50;
+	b.getPinMode(powerPin, function(x) { 
+		if (x.direction !== b.OUTPUT) {
+			b.pinMode(powerPin, b.OUTPUT);
+		}
+		if (x.value !== b.HIGH) {
+			b.digitalWrite(powerPin, b.HIGH);
+		}
+		ceiling = 0.50;
+	});
 }
 function lightsOff(powerPin) {
-	var pinStatus = b.getPinMode(powerPin, function(x) { return x });
-	if (pinStatus.direction !== b.OUTPUT) {
-		b.pinMode(powerPin, b.OUTPUT);
-	}
-	b.digitalWrite(powerPin, b.LOW);
-	ceiling = 0.30;
+	var pinStatus = b.getPinMode(powerPin, function(x) { 
+		if (pinStatus.direction !== b.OUTPUT) {
+			b.pinMode(powerPin, b.OUTPUT);
+		}
+		if (x.value !== b.LOW) {
+			b.digitalWrite(powerPin, b.LOW);
+		}
+		ceiling = 0.30;
+	});
 }
 
 mc.on("error", function(error) { console.log("cannot connect to automation.local: "+error+" >>")});
