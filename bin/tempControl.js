@@ -11,7 +11,9 @@ var b = require('bonescript'),
 	mq = require('mqtt'),
 	mc = mq.connect("mqtt://automation.local"),
 	moment = require('moment'),
-	powerPins = [ 'P8_7', 'P8_8', 'P8_9', 'P8_10', 'P8_11', 'P8_12', 'P8_14', 'P8_16' ];
+	powerPins = [ 'P8_7', 'P8_8', 'P8_9', 'P8_10', 'P8_11', 'P8_12', 'P8_14', 'P8_16' ],
+	floor = 0.1,
+	ceiling = 0.75;
 
 function startup() {
 	console.log(new Date+" INIT: Startup");
@@ -28,7 +30,6 @@ function startup() {
 
 
 function fanspeed(nfspd) {
-	var floor = 0.1, ceiling = 0.8;
 	// stupid way of doing it... fuck it.
 	if (nfspd > ceiling) {
 		nfspd = ceiling;
@@ -72,6 +73,7 @@ function lightsOn(powerPin) {
 		b.pinMode(powerPin, b.OUTPUT);
 	}
 	b.digitalWrite(powerPin, b.HIGH);
+	ceiling = 0.50;
 }
 function lightsOff(powerPin) {
 	var pinStatus = b.getPinMode(powerPin, function(x) { return x });
@@ -79,23 +81,57 @@ function lightsOff(powerPin) {
 		b.pinMode(powerPin, b.OUTPUT);
 	}
 	b.digitalWrite(powerPin, b.LOW);
+	ceiling = 0.30;
 }
 
 mc.on("error", function(error) { console.log("cannot connect to automation.local: "+error+" >>")});
 startup();
 // LIGHTS ON AND OFF
 // the schedules should become configuration variables, of some sort.
-var schedLightsOn = later.parse.recur().on(20).hour(), 
-	TschedLightsOn = later.setInterval(function() { lightsOn('P8_8'); }, schedLightsOn); // run every day at 22 (10pm)
-var schedLightsOff = later.parse.recur().on(08).hour(),
-	TschedLightsOff = later.setInterval(function() { lightsOff('P8_8'); }, schedLightsOff); // run every day at 10 (10am)
+var schedLightsOn = later.parse.recur().on(19).hour(), 
+	TschedLightsOn = later.setInterval(function() {
+		lightsOn('P8_8');
+		}, schedLightsOn); // run every day at 22 (10pm)
+var schedLightsOff = later.parse.recur().on(07).hour(),
+	TschedLightsOff = later.setInterval(function() {
+		lightsOff('P8_8');
+		}, schedLightsOff); // run every day at 10 (10am)
 
 // READ DHT Temp/Humid
 var sched2Min = later.parse.recur().every(2).minute(),
 	monRun = later.setInterval(getDHT, sched2Min);
 // turn on or off depending on where it starts up...
-if (moment().isBetween(later.schedule(schedLightsOff).prev(), later.schedule(schedLightsOn).next()) ) {
+var nowA = moment().isBetween(later.schedule(schedLightsOff).prev(), later.schedule(schedLightsOn).next());
+var nowB = moment().isBetween(later.schedule(schedLightsOn).prev(), later.schedule(schedLightsOff).next());
+if ( nowA && ! nowB ) {
+    console.trace(moment().isBetween(later.schedule(schedLightsOff).prev(), later.schedule(schedLightsOn).next()) );
+    console.trace(moment().isBetween(later.schedule(schedLightsOn).prev(), later.schedule(schedLightsOff).next()) );
 	lightsOff('P8_8');
 } else {
+    console.trace(moment().isBetween(later.schedule(schedLightsOff).prev(), later.schedule(schedLightsOn).next()) );
+    console.trace(moment().isBetween(later.schedule(schedLightsOn).prev(), later.schedule(schedLightsOff).next()) );
 	lightsOn('P8_8');
 }
+
+
+// configuration shit for my stuff... 
+/*
+var config = {
+	power: {
+		port: {
+			1: { pin: 'P8_7', color: 'red', volts: 237, ainPin: 'P9_35' },
+			2: { pin: 'P8_8', color: 'blue', volts: 237, ainPin: null },
+			3: { pin: 'P8_9', color: 'green', volts: 237, ainPin: null },
+			4: { pin: 'P8_10', color: 'yellow', volts: 237, ainPin: null },
+			5: { pin: 'P8_11', color: 'purple', volts: 237, ainPin: null },
+			6: { pin: 'P8_12', color: 'brown', volts: 237, ainPin: null },
+			7: { pin: 'P8_14', color: 'orange', volts: 237, ainPin: null },
+			8: { pin: 'P8_16', color: 'black', volts: 237, ainPin: 'P9_37' }
+			}, 
+	},
+
+
+}
+
+
+*/
