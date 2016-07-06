@@ -105,16 +105,13 @@ var schedLightsOff = later.parse.recur().on(07).hour(),
 // READ DHT Temp/Humid
 var sched2Min = later.parse.recur().every(2).minute(),
 	monRun = later.setInterval(getDHT, sched2Min);
-// turn on or off depending on where it starts up...
-var nowA = moment().isBetween(later.schedule(schedLightsOff).prev(), later.schedule(schedLightsOn).next());
-var nowB = moment().isBetween(later.schedule(schedLightsOn).prev(), later.schedule(schedLightsOff).next());
-if ( nowA && ! nowB ) {
-    console.trace(moment().isBetween(later.schedule(schedLightsOff).prev(), later.schedule(schedLightsOn).next()) );
-    console.trace(moment().isBetween(later.schedule(schedLightsOn).prev(), later.schedule(schedLightsOff).next()) );
+// turn on or off depending on when we start up, where we are in the schedule.
+
+var afterOff = moment().isAfter(later.schedule(schedLightsOff).prev()),
+    sameDay = moment().isSame(later.schedule(schedLightsOn).next(), 'd');
+if ( afterOff && sameDay && beforeOn) {
 	lightsOff('P8_8');
 } else {
-    console.trace(moment().isBetween(later.schedule(schedLightsOff).prev(), later.schedule(schedLightsOn).next()) );
-    console.trace(moment().isBetween(later.schedule(schedLightsOn).prev(), later.schedule(schedLightsOff).next()) );
 	lightsOn('P8_8');
 }
 
