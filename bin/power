@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-FPATH=~/intellistrip/lib
+FPATH=~/workspace//intellistrip/lib
 VERSION=0.1
 
 USAGE=$'[-?\n@(#)$Id: '$0' '${VERSION}'(SYSFS GPIO KSH Library)]'
