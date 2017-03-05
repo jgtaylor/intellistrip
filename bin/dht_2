@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo '{ "temp": 22.5, "humidty": 35.6 }'

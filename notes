@@ -1,0 +1,74 @@
+garden app notes:
+
+based on node.js, express.js, later.js, octalbonescript, mqtt, and others.
+
+
+equiqpment management
+	add/del/mod devices & containers.
+	provide data &/|| actions.
+equipment automation
+	add/del/mod schedules
+	associate schedules defined in the schedule collection with equipment/containers & actions
+		(e.g. {sensor: dht_ID, action: getTemp(...), laterSched: "every 10 mins"} )
+later schedules
+	add/del/mod named schedules
+	provide data for later.js
+
+
+the event thread model is confusing, so, here's what I'll try:
+most of these things are async so, as part of their call back,
+I'll try and have a whole pub/sub model to inform brokers of success
+or failure, which something else is watching for. Maybe it's a
+stupid way of communicating around the program and so on ...
+
+################################################################################
+
+ok, so, i've got to define a data structure for this. If it's gonna be a single
+"zone" manager, there's no point in a "zone", since those are really just 
+allocations of the devices known resources(sensors/actuators). So, really what
+we're talking about is how to characterize those resources.
+
+what if each device is a 'module' (object, with methods & the whole shi-bang).
+a config.js kind of file defines what modules get loaded. a driver/module dir
+can be configured and scanned. somehow, the configs should generate objects
+that can be assigned to a container/zone or as is.
+
+so, something like,:
+{name: dht22,
+readSensor: function(...){...} },
+{name: power,
+ports: [ {id: 0, gpio: 23, on: function(){}, off: function(){} }, {id: 1, gpio: 25 ...} ]
+}
+ // basically an array of devices., so maybe something more like this:
+{name: power,
+ gpio: 39,
+ powerOn: function() {},
+ powerOff: function() {...},
+ powerStatus: function() { ...  }
+}
+// then you can do an arry of them.
+
+anyway, once the devices are available, associate a schedule with them, perhaps
+using later, with the named schedule callback as the object's method, or something.
+the thing emits an mqtt publish message.
+
+a series of monitors can be defined to subscribe to the device messages, with 
+thresholds set, etc.
+
+It would be interesting if the monitor could emit events - alarms of variety
+classes (info, warning, critical, error, etc), and listeners could be set
+to perform actions.
+
+next, how to create these interfaces. each device object should have a property
+last value, some where in the object.The interface can call the last value on
+startup and wait for the mqtt messages to update the display.
+
+The management of the schedules, montiors, actions, devices still has to be
+worked out. How to define later.js schedules via a web model, how to
+create monitors(property to check, threshholds, actions, frequency),
+actions(start, stop, dimUp, dimDown, open, close, )... etc.
+
+################################################################################
+to RECAP:
+sensors defined, schedules defined, actions defined, conditions defined.
+first sensors/actuators: DHT22, Power Relays*8, analogCT
