@@ -3,7 +3,7 @@
 /* this is a module, it should return an array of devices */
 const fs = require("fs"),
 	EventEmitter = require("events"),
-	Device = require("./device.js");
+	Device = require("./Device.js");
 
 module.exports = (config) => {
 	const devices = new EventEmitter();
