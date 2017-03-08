@@ -1,0 +1,47 @@
+[{
+        "deviceID": "635c943a-6b8a-7b22-32e1-1a397411c2c6",
+        "deviceType": "button",
+        "deviceModule": "native",
+        "deviceCmds": [
+            "on",
+            "off",
+            "toggle",
+            "status",
+            "init"
+        ],
+        "devicePin": "GPIO_67",
+        "deviceLocation": "Zone A",
+        "meta": {
+            "buttonType": "Mains Relay",
+            "limits": "10A/250AC 20A/120AC",
+            "description": "Simple switch"
+        }
+    },
+    {
+        "deviceID": "715b8504-9ead-6c3c-3fce-313662441d64",
+        "deviceType": "virtual",
+        "deviceCmds": [
+            "read",
+            "init"
+        ],
+        "deviceLocation": "Zone A",
+        "deviceModule": "dht",
+        "devicePin": "P9_21",
+        "meta": {
+            "outputs": [{
+                    "metric": "Temperature",
+                    "unit": "C"
+                },
+                {
+                    "metric": "Humidity",
+                    "unit": "%RH"
+                }
+            ],
+            "validRange": [-40,
+                85
+            ],
+            "sensorModel": "DHT22",
+            "Desctription": "Temperature & Humidity Sensor"
+        }
+    }
+]
