@@ -27,33 +27,35 @@ module.exports = ( devConfig ) => {
 			wrap this in a platform object that returns button.
 			*/
 			let pin = devConfig.devicePin;
-			device.btnCmds.on = () => {
-				// check for bonescript stuff...?
-				return b.digitalWrite( pin, b.HIGH );
-			};
-			device.btnCmds.off = () => {
-				return b.digitalWrite( pin, b.LOW );
-			};
-			device.btnCmds.toggle = () => {
-				let currentState = b.digitalRead( pin, ( e, d ) => {
-					if ( d === b.LOW ) {
-						return b.digitalWrite( pin, b.HIGH )
-					} else {
-						return b.digitalWrite( pin, b.LOW );
-					}
-				} );
-			};
-			device.btnCmds.status = () => {
-				b.digitalRead( pin, ( e, d ) => {
-					if ( e ) return e;
-					if ( d ) return d;
-				} );
-			};
-			device.btnCmds.init = () => {
-				return b.pinMode( pin, b.OUTPUT );
+
+			device.btnCmds = {
+				on: () => {
+					// check for bonescript stuff...?
+					return b.digitalWrite( pin, b.HIGH );
+				},
+				off: () => {
+					return b.digitalWrite( pin, b.LOW );
+				},
+				toggle: () => {
+					let currentState = b.digitalRead( pin, ( e, d ) => {
+						if ( d === b.LOW ) {
+							return b.digitalWrite( pin, b.HIGH )
+						} else {
+							return b.digitalWrite( pin, b.LOW );
+						}
+					} );
+				},
+				status: () => {
+					b.digitalRead( pin, ( e, d ) => {
+						if ( e ) return e;
+						if ( d ) return d;
+					} );
+				},
+				init: () => {
+					return b.pinMode( pin, b.OUTPUT );
+				}
 			};
 			return device;
-
 			break;
 		}
 	case "dimmer":
