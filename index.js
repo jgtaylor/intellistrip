@@ -7,10 +7,15 @@ const later = require( 'later' ),
 	Event = require( 'events' );
 
 // get the devices available
+Devices.on("added" (msg) => {
+	console.log("added: "+msg.deviceID);
+});
+
 var devices = Devices();
+console.log(devices);
 
 // get the logical layout
-var zones = Zones(); // NOT WHAT I WANT, but i don't know what i want :-(
+//var zones = Zones(); // NOT WHAT I WANT, but i don't know what i want :-(
 //zones[0].lights.on.schedule()
 //zones[0].lights.off.schedule()
 //zones[0].pumpX.on.schedule()
