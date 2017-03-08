@@ -9,7 +9,7 @@
             "status",
             "init"
         ],
-        "devicePin": "GPIO_67",
+        "devicePin": "P8_8",
         "deviceLocation": "Zone A",
         "meta": {
             "buttonType": "Mains Relay",
@@ -28,7 +28,7 @@
             "status",
             "init"
         ],
-        "devicePin": "GPIO_68",
+        "devicePin": "P8_10",
         "deviceLocation": "Zone A",
         "meta": {
             "buttonType": "Mains Relay",
@@ -47,7 +47,7 @@
             "status",
             "init"
         ],
-        "devicePin": "GPIO_44",
+        "devicePin": "P8_12",
         "deviceLocation": "Zone A",
         "meta": {
             "buttonType": "Mains Relay",
@@ -66,7 +66,7 @@
             "status",
             "init"
         ],
-        "devicePin": "GPIO_26",
+        "devicePin": "P8_14",
         "deviceLocation": "Zone A",
         "meta": {
             "buttonType": "Mains Relay",
@@ -85,7 +85,7 @@
             "status",
             "init"
         ],
-        "devicePin": "GPIO_46",
+        "devicePin": "P8_16",
         "deviceLocation": "Zone A",
         "meta": {
             "buttonType": "Mains Relay",
@@ -123,16 +123,15 @@
             "status",
             "init"
         ],
-        "devicePin": "GPIO_69",
+        "devicePin": "P8_9",
         "deviceLocation": "Zone A",
         "meta": {
             "buttonType": "Mains Relay",
             "limits": "10A/250AC 20A/120AC",
             "description": "Simple switch"
         }
-    },
-    {
-        "deviceID": "479a2b6d-b247-2a7b-8aee-054b8a8cf500",
+    }, {
+        "deviceID": "a6aa7183-5920-9aa0-cb7a-16bd59720d32",
         "deviceType": "button",
         "deviceModule": "native",
         "deviceCmds": [
@@ -142,7 +141,7 @@
             "status",
             "init"
         ],
-        "devicePin": "GPIO_66",
+        "devicePin": "P8_11",
         "deviceLocation": "Zone A",
         "meta": {
             "buttonType": "Mains Relay",
