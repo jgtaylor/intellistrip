@@ -65,5 +65,6 @@ module.exports = (devConfig) => {
 	Object.keys(devConfig).forEach((key) => {
 		device[key] = devConfig[key];
 	});
-	return Object.freeze(device);
+	//return Object.freeze(device);
+	return device;
 };
