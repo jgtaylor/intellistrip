@@ -44,7 +44,7 @@ module.exports = ( devConfig ) => {
 				} );
 			};
 			device.btnCmds.status = () => {
-				b.digitalRead( pin, ( e, d ) {
+				b.digitalRead( pin, ( e, d ) => {
 					if ( e ) return e;
 					if ( d ) return d;
 				} );
