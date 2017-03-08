@@ -17,3 +17,4 @@ systemctl enable influxdb.service
 systemctl start influxdb.service
 systemctl status influxdb.service
 
+# create environ database etc.
