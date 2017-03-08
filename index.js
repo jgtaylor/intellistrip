@@ -7,10 +7,6 @@ const later = require( 'later' ),
 	Event = require( 'events' );
 
 // get the devices available
-Devices.on("added", (msg) => {
-	console.log("added: "+msg.deviceID);
-});
-
 var devices = Devices();
 console.log(devices);
 
