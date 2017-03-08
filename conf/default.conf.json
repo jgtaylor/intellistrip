@@ -1,0 +1,7 @@
+{
+    "influxDB": {
+        "influxDBHost": "127.0.0.1",
+        "influxDBPort": 8086,
+        "dbName": "environ"
+    },
+}
