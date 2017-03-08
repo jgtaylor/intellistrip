@@ -6,12 +6,12 @@ const fs = require("fs"),
 	Device = require("./Device.js");
 
 module.exports = (config) => {
-	const devices = new EventEmitter();
+	let devices = new EventEmitter();
 	devices.dev = {};
 
 	devices.add = (devConfig) => {
         // should look like { deviceID: "xxxx", deviceType: enum:[button, dimmer, virtual]}
-		const device = Device(devConfig);
+		let device = Device(devConfig);
 		let devID = device.deviceID;
 		if (!devices.dev[devID]) {
 			devices.dev[devID] = device;
