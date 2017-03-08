@@ -86,12 +86,12 @@ module.exports = (config) => {
 		devices.emit("removed", deviceID);
 		return devices;
 	};
-	devices.on("added", (msg) => {
-		console.log("added: " + JSON.stringify(msg, null, 2));
-	});
-	devices.on("removed", (msg) => {
-		console.log(`removed: ${msg}`);
-	});
+	// devices.on("added", (msg) => {
+	// 	console.log("added: " + JSON.stringify(msg, null, 2));
+	// });
+	// devices.on("removed", (msg) => {
+	// 	console.log(`removed: ${msg}`);
+	// });
 
 	function init() {
 		let configData = JSON.parse(fs.readFileSync("devices.json", "utf-8"));
