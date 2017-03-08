@@ -107,5 +107,6 @@ module.exports = (config) => {
 	if (!config) {
 		init();
 	}
-	return Object.freeze(devices);
+	//return Object.freeze(devices);
+	return devices;
 };
