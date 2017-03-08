@@ -1,4 +1,5 @@
-[{
+[
+    {
         "deviceID": "635c943a-6b8a-7b22-32e1-1a397411c2c6",
         "deviceType": "button",
         "deviceModule": "native",
@@ -130,8 +131,9 @@
             "limits": "10A/250AC 20A/120AC",
             "description": "Simple switch"
         }
-    }, {
-        "deviceID": "a6aa7183-5920-9aa0-cb7a-16bd59720d32",
+    },
+    {
+        "deviceID": "0acf1392-dadd-8f5b-1331-2e7a5f55381f",
         "deviceType": "button",
         "deviceModule": "native",
         "deviceCmds": [
@@ -160,7 +162,8 @@
         "deviceModule": "dht",
         "devicePin": "P9_21",
         "meta": {
-            "outputs": [{
+            "outputs": [
+                {
                     "metric": "Temperature",
                     "unit": "C"
                 },
@@ -169,7 +172,8 @@
                     "unit": "%RH"
                 }
             ],
-            "validRange": [-40,
+            "validRange": [
+                -40,
                 85
             ],
             "sensorModel": "DHT22",
