@@ -16,7 +16,6 @@ module.exports = ( devConfig ) => {
 	if ( !devConfig.deviceID ) {
 		device.deviceID = guid();
 	}
-	// only needed during development.
 	switch ( devConfig.deviceType ) {
 	case "button":
 		{
@@ -31,28 +30,28 @@ module.exports = ( devConfig ) => {
 			device.button = {
 				on: () => {
 					// check for bonescript stuff...?
-					return b.digitalWrite( pin, b.HIGH );
+					return digitalWrite( pin, HIGH );
 				},
 				off: () => {
-					return b.digitalWrite( pin, b.LOW );
+					return digitalWrite( pin, LOW );
 				},
 				toggle: () => {
-					let currentState = b.digitalRead( pin, ( e, d ) => {
-						if ( d === b.LOW ) {
-							return b.digitalWrite( pin, b.HIGH )
+					let currentState = digitalRead( pin, ( e, d ) => {
+						if ( d === LOW ) {
+							return digitalWrite( pin, HIGH )
 						} else {
-							return b.digitalWrite( pin, b.LOW );
+							return digitalWrite( pin, LOW );
 						}
 					} );
 				},
 				status: () => {
-                    if (b.digitalRead( pin )) {
+                    if (digitalRead( pin )) {
                         return "on";
                     };
                     return "off";
 				},
 				init: () => {
-					return b.pinMode( pin, b.OUTPUT );
+					return pinMode( pin, OUTPUT );
 				}
 			};
 			break;
