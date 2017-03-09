@@ -55,7 +55,7 @@ module.exports = ( devConfig ) => {
 					return b.pinMode( pin, b.OUTPUT );
 				}
 			};
-			return device;
+	//		return device;
 			break;
 		}
 	case "dimmer":
