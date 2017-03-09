@@ -31,14 +31,14 @@ module.exports = (config) => {
 		//should match a key or a value.
 		Object.keys(devices.dev).forEach( (obj,idx,o) => {
 			let p = devices.dev[obj];
-			Object.keys(p).forEach((el,i,a)) => {
+			Object.keys(p).forEach((el,i,a) => {
 				if (el === search) {
 					return p;
 				}
 				if (p.el === search) {
 					return p;
 				}
-			}
+			});
 		});
 	};
 
