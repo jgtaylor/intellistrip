@@ -28,14 +28,17 @@ module.exports = (config) => {
 	};
 
 	devices.query = (search) => {
-		return devices.dev.find((el) => {
-			let searchKey = Object.keys(search),
-				searchValue = search[searchKey];
-			if (el.searchKey) {
-				if (el.searchKey === searchValue) {
-					return el;
+		//should match a key or a value.
+		Object.keys(devices.dev).forEach( (obj,idx,o) => {
+			let p = devices.dev[obj];
+			Object.keys(p).forEach((el,i,a)) => {
+				if (el === search) {
+					return p;
 				}
-			}
+				if (p.el === search) {
+					return p;
+				}
+			})
 		});
 	};
 
