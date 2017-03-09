@@ -46,7 +46,10 @@ module.exports = ( devConfig ) => {
 					} );
 				},
 				status: () => {
-					return b.digitalRead( pin );
+                    if (b.digitalRead( pin )) {
+                        return "on";
+                    };
+                    return "off";
 				},
 				init: () => {
 					return b.pinMode( pin, b.OUTPUT );
