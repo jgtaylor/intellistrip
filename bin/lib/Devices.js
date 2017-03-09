@@ -5,11 +5,10 @@ const fs = require("fs"),
 	EventEmitter = require("events"),
 	Device = require("./Device.js");
 
-if (!bone) {
-	require("bonescript").setGlobals(); // probably bad, but fuck it.
-}
-
 module.exports = (config) => {
+	if (!bone) {
+		require("bonescript").setGlobals(); // probably bad, but fuck it.
+	}
 	let devices = new EventEmitter();
 	devices.dev = {};
 
