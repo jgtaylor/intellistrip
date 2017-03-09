@@ -38,7 +38,7 @@ module.exports = (config) => {
 				if (p.el === search) {
 					return p;
 				}
-			})
+			}
 		});
 	};
 
