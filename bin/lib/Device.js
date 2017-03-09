@@ -28,7 +28,7 @@ module.exports = ( devConfig ) => {
 			*/
 			let pin = devConfig.devicePin;
 
-			device.btnCmds = {
+			device.button = {
 				on: () => {
 					// check for bonescript stuff...?
 					return b.digitalWrite( pin, b.HIGH );
