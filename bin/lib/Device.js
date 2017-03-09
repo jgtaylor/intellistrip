@@ -28,7 +28,7 @@ module.exports = ( devConfig ) => {
 			*/
 			let pin = devConfig.devicePin;
 
-			device.btnCmds = {
+			device.button = {
 				on: () => {
 					// check for bonescript stuff...?
 					return b.digitalWrite( pin, b.HIGH );
@@ -46,16 +46,17 @@ module.exports = ( devConfig ) => {
 					} );
 				},
 				status: () => {
-					b.digitalRead( pin, ( e, d ) => {
-						if ( e ) return e;
-						if ( d ) return d;
-					} );
+					b.digitalRead( pin );
 				},
 				init: () => {
 					return b.pinMode( pin, b.OUTPUT );
 				}
 			};
+<<<<<<< HEAD
 	//		return device;
+=======
+			//return device;
+>>>>>>> e497f1bdf5b2b8aa51b07a0303c9b002800db627
 			break;
 		}
 	case "dimmer":
