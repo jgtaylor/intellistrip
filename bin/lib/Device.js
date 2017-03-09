@@ -46,16 +46,13 @@ module.exports = ( devConfig ) => {
 					} );
 				},
 				status: () => {
-					b.digitalRead( pin, ( e, d ) => {
-						if ( e ) return e;
-						if ( d ) return d;
-					} );
+					b.digitalRead( pin );
 				},
 				init: () => {
 					return b.pinMode( pin, b.OUTPUT );
 				}
 			};
-			return device;
+			//return device;
 			break;
 		}
 	case "dimmer":
