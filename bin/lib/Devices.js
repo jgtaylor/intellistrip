@@ -6,8 +6,11 @@ const fs = require("fs"),
 	Device = require("./Device.js");
 
 module.exports = (config) => {
-	if (!bone) {
-		require("bonescript").setGlobals(); // probably bad, but fuck it.
+	try{ bone; }
+	catch(e) {
+	    if(e.name == "ReferenceError") {
+	        require("bonescript").setGlobals();
+	    }
 	}
 	let devices = new EventEmitter();
 	devices.dev = {};
