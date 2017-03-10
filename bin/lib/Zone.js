@@ -12,7 +12,7 @@ function s4() {
 }
 
 module.exports = ( zoneConfig ) => {
-	const zone = new EventEmitter();
+	let zone = new EventEmitter();
 	if ( !zoneConfig.zoneID ) {
 		zone.zoneID = guid();
 	}

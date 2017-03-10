@@ -6,6 +6,8 @@ const fs = require( "fs" ),
 	Zone = require( "./Zone" );
 
 module.exports = ( config ) => {
+	let zones = new EventEmitter();
+
 	zones.add = ( zoneConfig ) => {
 		// should look like { zoneID: "xxxx", deviceType: enum:[button, dimmer, virtual]}
 		let zone = Zone( zoneConfig );
