@@ -85,7 +85,7 @@ module.exports = ( devConfig ) => {
 			*/
 			device.dimmer = {
 				init: () => {
-					break;
+					return;
 				},
 
 			}
