@@ -11,7 +11,7 @@ function s4() {
 		.substring( 1 );
 }
 
-module.exports = ( zoneConfig ) => {
+module.exports = ( devices, zoneConfig ) => {
 	let zone = new EventEmitter();
 	if ( !zoneConfig.zoneID ) {
 		zone.zoneID = guid();
@@ -21,8 +21,8 @@ module.exports = ( zoneConfig ) => {
 		.forEach( ( key ) => {
 			// use devices.query(zoneConfig[key]) to find it and load it.
 			// once devices.query() works.
-			if ( devices.dev[ zoneConfig[ key ] ] ) {
-				zone[ key ] = devices.dev[ zoneConfig[ key ] ];
+			if ( devices[ zoneConfig[ key ] ] ) {
+				zone[ key ] = devices[ zoneConfig[ key ] ];
 			} else {
 				zone[ key ] = zoneConfig[ key ];
 			}
