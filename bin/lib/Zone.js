@@ -1,3 +1,6 @@
+"use strict";
+/* eslint no-console: "off", no-unused-vars: "off" */
+/* this is a module, it should return an array of devices */
 const EventEmitter = require( "events" );
 
 function guid() {
