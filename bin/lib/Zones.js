@@ -91,12 +91,6 @@ module.exports = ( config ) => {
 		zones.emit( "removed", zoneID );
 		return zones;
 	};
-	// devices.on("added", (msg) => {
-	// 	console.log("added: " + JSON.stringify(msg, null, 2));
-	// });
-	// devices.on("removed", (msg) => {
-	// 	console.log(`removed: ${msg}`);
-	// });
 
 	function init() {
 		let configData = JSON.parse( fs.readFileSync( "zones.json", "utf-8" ) );
