@@ -16,9 +16,16 @@ module.exports = ( zoneConfig ) => {
 	if ( !zoneConfig.zoneID ) {
 		zone.zoneID = guid();
 	}
+	// for now, just access a fixed global, devices
 	Object.keys( zoneConfig )
 		.forEach( ( key ) => {
-			zone[ key ] = zoneConfig[ key ];
+			// use devices.query(zoneConfig[key]) to find it and load it.
+			// once devices.query() works.
+			if ( devices.dev[ zoneConfig[ key ] ] ) {
+				zone[ key ] = devices.dev[ zoneConfig[ key ] ];
+			} else {
+				zone[ key ] = zoneConfig[ key ];
+			}
 		} );
 	return zone;
 }
