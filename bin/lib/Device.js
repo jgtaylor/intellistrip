@@ -16,6 +16,7 @@ module.exports = ( devConfig ) => {
 	if ( !devConfig.deviceID ) {
 		device.deviceID = guid();
 	}
+	let pin = devConfig.devicePin;
 	switch ( devConfig.deviceType ) {
 	case "button":
 		{
@@ -25,11 +26,8 @@ module.exports = ( devConfig ) => {
 			it around for serialization.
 			wrap this in a platform object that returns button.
 			*/
-			let pin = devConfig.devicePin;
-
 			device.button = {
 				on: () => {
-					// check for bonescript stuff...?
 					if (digitalWrite( pin, HIGH )) {
 						device.emit("state", { state: HIGH });
 						return true;
@@ -68,7 +66,9 @@ module.exports = ( devConfig ) => {
 				init: () => {
 					if (pinMode( pin, OUTPUT )) {
 						device.emit("init", getPinMode( pin ).gpio)
+						return true;
 					}
+					return false;
 				}
 			};
 			break;
@@ -83,6 +83,12 @@ module.exports = ( devConfig ) => {
 			there's no /sys/class/pwm available. However, if there's an LCD attached,
 			then it's likely there's a PWM output for the LCD brightness :-)
 			*/
+			device.dimmer = {
+				init: () => {
+					break;
+				},
+
+			}
 			break;
 		}
 	case "virtual":
