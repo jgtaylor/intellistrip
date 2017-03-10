@@ -11,7 +11,7 @@ module.exports = ( devices, config ) => {
 	zones.add = ( devices, zoneConfig ) => {
 		// should look like { zoneID: "xxxx", deviceType: enum:[button, dimmer, virtual]}
 		let zone = Zone( devices, zoneConfig );
-		let zoneID = zone.zoneID;
+		let zoneID = zoneConfig.zoneID;
 		if ( !zones.zone[ zoneID ] ) {
 			zones.zone[ zoneID ] = zone;
 			zones.emit( "added", zone );
