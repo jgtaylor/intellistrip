@@ -1,0 +1,15 @@
+[{
+        "zoneName": "babys",
+        "lampA": "635c943a-6b8a-7b22-32e1-1a397411c2c6",
+        "lampB": "1157249c-3713-f1e7-7a66-b666d3307061",
+        "fogger": "229fb8cd-dba7-9dd3-3f8f-544609b3fbdb",
+        "tempHum": "715b8504-9ead-6c3c-3fce-313662441d64"
+    },
+    {
+        "zoneName": "mommys",
+        "lampA": "dee8d3ff-995e-f968-514c-9caff255bea3",
+        "fanA": "f1c522b1-dd66-e2d8-2e84-5e920f40bce4",
+        "fanExhaust": "73807a3a-179e-b1bf-2f22-4c8eb80d98b2",
+        "tempHum": ""
+    }
+]
