@@ -6,6 +6,7 @@ const fs = require("fs"),
 	Device = require("./Device.js");
 
 module.exports = (config) => {
+	// assuming a beaglebone black platform
 	try{ bone; }
 	catch(e) {
 	    if(e.name == "ReferenceError") {
