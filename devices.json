@@ -1,5 +1,4 @@
-[
-    {
+[{
         "deviceID": "635c943a-6b8a-7b22-32e1-1a397411c2c6",
         "deviceType": "button",
         "deviceModule": "native",
@@ -159,11 +158,10 @@
             "init"
         ],
         "deviceLocation": "Zone A",
-        "deviceModule": "dht",
+        "deviceModule": "beaglebone-dht",
         "devicePin": "P9_21",
         "meta": {
-            "outputs": [
-                {
+            "outputs": [{
                     "metric": "Temperature",
                     "unit": "C"
                 },
@@ -172,8 +170,7 @@
                     "unit": "%RH"
                 }
             ],
-            "validRange": [
-                -40,
+            "validRange": [-40,
                 85
             ],
             "sensorModel": "DHT22",
