@@ -30,28 +30,45 @@ module.exports = ( devConfig ) => {
 			device.button = {
 				on: () => {
 					// check for bonescript stuff...?
-					return digitalWrite( pin, HIGH );
+					if (digitalWrite( pin, HIGH )) {
+						device.emit("state", { state: HIGH });
+						return true;
+					}
+					return false;
 				},
 				off: () => {
-					return digitalWrite( pin, LOW );
+					if (digitalWrite( pin, LOW )) {
+						device.emit("state", {state: LOW });
+						return true;
+					}
+					return false;
 				},
 				toggle: () => {
 					let currentState = digitalRead( pin, ( e, d ) => {
 						if ( d === LOW ) {
-							return digitalWrite( pin, HIGH )
+							if (digitalWrite( pin, HIGH )) {
+								device.emit("state", {state: HIGH });
+								return true;
+							}
+							return false;
 						} else {
-							return digitalWrite( pin, LOW );
+							if (digitalWrite( pin, LOW )) {
+								device.emit("state", {state: LOW });
+								return true;
+							}
+							return false;
 						}
 					} );
 				},
 				status: () => {
-                    if (digitalRead( pin )) {
-                        return "on";
-                    };
-                    return "off";
+					let status  = getPinMode( pin ).gpio;
+                    device.emit("status", status);
+					return status;
 				},
 				init: () => {
-					return pinMode( pin, OUTPUT );
+					if (pinMode( pin, OUTPUT )) {
+						device.emit("init", getPinMode( pin ).gpio)
+					}
 				}
 			};
 			break;
