@@ -5,12 +5,12 @@ const fs = require( "fs" ),
 	EventEmitter = require( "events" ),
 	Zone = require( "./Zone" );
 
-module.exports = ( config ) => {
+module.exports = ( devices, config ) => {
 	let zones = new EventEmitter();
 
-	zones.add = ( zoneConfig ) => {
+	zones.add = ( devices, zoneConfig ) => {
 		// should look like { zoneID: "xxxx", deviceType: enum:[button, dimmer, virtual]}
-		let zone = Zone( zoneConfig );
+		let zone = Zone( devices, zoneConfig );
 		let zoneID = zone.zoneID;
 		if ( !zones.zone[ zoneID ] ) {
 			zones.zone[ zoneID ] = zone;

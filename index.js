@@ -9,7 +9,7 @@ const later = require( 'later' ),
 
 // get the devices available
 var devices = Devices();
-var zones = Zones();
+var zones = Zones(devices.dev);
 
 console.log(zones);
 
