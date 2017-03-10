@@ -15,9 +15,9 @@ function s4() {
 }
 
 module.exports = ( devices, zoneConfig ) => {
-	let zone = new EventEmitter();
+    let zone = new EventEmitter();
 	if ( !zoneConfig.zoneID ) {
-		zone.zoneID = guid();
+		zoneConfig.zoneID = guid();
 	}
 	// for now, just access a fixed global, devices
 	Object.keys( zoneConfig )
