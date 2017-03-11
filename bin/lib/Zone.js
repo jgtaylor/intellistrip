@@ -15,24 +15,19 @@ function s4() {
 }
 
 module.exports = ( devices, zoneConfig ) => {
-    let zone = new EventEmitter();
+	let zone = new EventEmitter();
 	if ( !zoneConfig.zoneID ) {
 		zoneConfig.zoneID = guid();
 	}
-
-    function devFilter(devID) {
-
-    }
-	// for now, just access a fixed global, devices
 	Object.keys( zoneConfig )
 		.forEach( ( key ) => {
 			// use devices.query(zoneConfig[key]) to find it and load it.
 			// once devices.query() works.
-            if ( devices.list().includes(zoneConfig[key])  ) {
-                zone[key] = devices.dev[zoneConfig[key]];
-            } else {
-                zone[key] = zoneConfig[key];
-            }
-        });
+			if ( devices.list().includes(zoneConfig[key])  ) {
+				zone[key] = devices.dev[zoneConfig[key]];
+			} else {
+				zone[key] = zoneConfig[key];
+			}
+		});
 	return zone;
-}
+};
