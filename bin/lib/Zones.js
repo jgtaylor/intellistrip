@@ -7,20 +7,20 @@ const fs = require( "fs" ),
 
 module.exports = ( devices, config ) => {
 	let zones = new EventEmitter();
-    zones.zone = {};
+	zones.zone = {};
 
 	zones.add = ( config ) => {
 		// should look like { zoneID: "xxxx", deviceType: enum:[button, dimmer, virtual]}
-        if (!config) {
-            return new Error("no config passed in.")
-        }
+		if (!config) {
+			return new Error("no config passed in.");
+		}
 		if (!zones.zone[config.zoneID]) {
-            let zone = Zone(devices, config);
+			let zone = Zone(devices, config);
 			zones.zone[zone.zoneID] = zone;
 			zones.emit( "added", zone );
 			return zones;
 		} else {
-			zones.emit( "error", new Error( "zone: " + zone.zoneID + " already exists." ) );
+			zones.emit( "error", new Error( "zone: " + config.zoneID + " already exists." ) );
 			return zones;
 		}
 	};
@@ -72,11 +72,11 @@ module.exports = ( devices, config ) => {
 							}
 						default:
 							{
-                                let thing = zones.zone[el][k];
-                                if ( (thing instanceof events.EventEmitter) && (thing.deviceID) ) {
-                                    j[k] = thing.deviceID;
-                                    break;
-                                }
+								let thing = zones.zone[el][k];
+								if ( (thing instanceof events.EventEmitter) && (thing.deviceID) ) {
+									j[k] = thing.deviceID;
+									break;
+								}
 								j[k] = zones.zone[el][k];
 								break;
 							}
