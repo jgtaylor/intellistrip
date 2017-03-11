@@ -2,14 +2,12 @@
 const later = require( 'later' ),
 	moment = require( 'moment' ),
 	websockets = require( 'websockets' ),
-	bone = require( 'bonescript' ),
 	Devices = require( './bin/lib/Devices' ),
-	Event = require( 'events' ),
 	Zones = require("./bin/lib/Zones");
 
 // get the devices available
 var devices = Devices();
-var zones = Zones(devices.dev);
+var zones = Zones(devices);
 
 console.log(zones);
 
