@@ -1,3 +1,4 @@
+"use strict"
 //var db = require("./bin/lib/influxdbHandler");
 const later = require( 'later' ),
 	moment = require( 'moment' ),
