@@ -19,19 +19,20 @@ module.exports = ( devices, zoneConfig ) => {
 	if ( !zoneConfig.zoneID ) {
 		zoneConfig.zoneID = guid();
 	}
+
+    function devFilter(devID) {
+
+    }
 	// for now, just access a fixed global, devices
 	Object.keys( zoneConfig )
 		.forEach( ( key ) => {
 			// use devices.query(zoneConfig[key]) to find it and load it.
 			// once devices.query() works.
-            devices.list().filter( (e) => {
-                console.log("Dev id: "+e+" != "+zoneConfig[key]);
-                if (zoneConfig[key] === e ) {
-                    zone[key] = devices.dev[e];
-                } else {
-                    zone[key] = zoneConfig[key];
-                }
-            });
-		});
+            if ( devices.list().includes(zoneConfig[key])  ) {
+                zone[key] = devices.dev[zoneConfig[key]];
+            } else {
+                zone[key] = zoneConfig[key];
+            }
+        });
 	return zone;
 }
