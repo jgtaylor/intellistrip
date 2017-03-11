@@ -61,6 +61,9 @@ module.exports = ( devConfig ) => {
 						}
 					} );
 				},
+				read: () => {
+					return digitalRead(pin);
+				},
 				status: () => {
 					let status  = getPinMode( pin ).gpio;
                     device.emit("status", status);
