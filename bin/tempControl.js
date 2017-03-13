@@ -14,8 +14,8 @@ var b = require('bonescript'),
     moment = require('moment'),
     powerPins = ['P8_7', 'P8_8', 'P8_9', 'P8_10', 'P8_11', 'P8_12', 'P8_14', 'P8_16'],
     light1 = powerPins[1],
-    floor = 0.1,
-    ceiling = 0.75,
+    floor = 0.3,
+    ceiling = 1,
     http = require("http"),
     options = {
         hostname: 'automation.local',
@@ -161,6 +161,15 @@ var sched2Min = later.parse.recur().every(1).minute(),
     monRun = later.setInterval(getDHT, sched2Min);
 // turn on or off depending on when we start up, where we are in the schedule.
 
+if (moment(moment.now).isBetween(later.schedule(schedLightsOn).prev(), later.schedule(schedLightsOff).next())) {
+    lightsOn(light1);
+    console.log("Turning lights on.");
+} else {
+    lightsOff(light1);
+    console.log("Turning lights off.");
+}
+
+/*
 var afterOff = moment().isAfter(later.schedule(schedLightsOff).prev()),
     sameDay = moment().isSame(later.schedule(schedLightsOn).next(), 'd');
 if (afterOff && sameDay) {
@@ -170,4 +179,5 @@ if (afterOff && sameDay) {
     lightsOn(light1);
     console.log("Turning lights off.");
 }
+*/
 
