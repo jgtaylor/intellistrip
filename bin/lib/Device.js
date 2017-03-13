@@ -31,15 +31,19 @@ module.exports = ( devConfig ) => {
 			*/
 			device.button = {
 				on: () => {
-					if (digitalWrite( pin, HIGH )) {
-						device.emit("state", { state: HIGH });
+					if ( digitalWrite( pin, HIGH ) ) {
+						device.emit( "state", {
+							state: HIGH
+						} );
 						return true;
 					}
 					return false;
 				},
 				off: () => {
-					if (digitalWrite( pin, LOW )) {
-						device.emit("state", {state: LOW });
+					if ( digitalWrite( pin, LOW ) ) {
+						device.emit( "state", {
+							state: LOW
+						} );
 						return true;
 					}
 					return false;
@@ -47,14 +51,18 @@ module.exports = ( devConfig ) => {
 				toggle: () => {
 					let currentState = digitalRead( pin, ( e, d ) => {
 						if ( d === LOW ) {
-							if (digitalWrite( pin, HIGH )) {
-								device.emit("state", {state: HIGH });
+							if ( digitalWrite( pin, HIGH ) ) {
+								device.emit( "state", {
+									state: HIGH
+								} );
 								return true;
 							}
 							return false;
 						} else {
-							if (digitalWrite( pin, LOW )) {
-								device.emit("state", {state: LOW });
+							if ( digitalWrite( pin, LOW ) ) {
+								device.emit( "state", {
+									state: LOW
+								} );
 								return true;
 							}
 							return false;
@@ -62,16 +70,18 @@ module.exports = ( devConfig ) => {
 					} );
 				},
 				read: () => {
-					return digitalRead(pin);
+					return digitalRead( pin );
 				},
 				status: () => {
-					let status  = getPinMode( pin ).gpio;
-                    device.emit("status", status);
+					let status = getPinMode( pin )
+						.gpio;
+					device.emit( "status", status );
 					return status;
 				},
 				init: () => {
-					if (pinMode( pin, OUTPUT )) {
-						device.emit("init", getPinMode( pin ).gpio)
+					if ( pinMode( pin, OUTPUT ) ) {
+						device.emit( "init", getPinMode( pin )
+							.gpio );
 						return true;
 					}
 					return false;
@@ -93,8 +103,17 @@ module.exports = ( devConfig ) => {
 				init: () => {
 					return;
 				},
-
-			}
+				set: ( value, freq ) => {
+					if ( freq ) {
+						return analogWrite( pin, value, freq );
+					} else {
+						return analogWrite(pin, value, 2000);
+					}
+				},
+				get: (pin) => {
+					return getPinMode(pin).pwm;
+				}
+			};
 			break;
 		}
 	case "virtual":
