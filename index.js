@@ -1,9 +1,9 @@
-"use strict"
+"use strict";
 //var db = require("./bin/lib/influxdbHandler");
-const later = require( 'later' ),
-	moment = require( 'moment' ),
-	websockets = require( 'websockets' ),
-	Devices = require( './bin/lib/Devices' ),
+const later = require( "later" ),
+	moment = require( "moment" ),
+	websockets = require( "websockets" ),
+	Devices = require( "./bin/lib/Devices" ),
 	Zones = require("./bin/lib/Zones");
 
 // get the devices available
