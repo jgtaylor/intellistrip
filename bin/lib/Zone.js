@@ -57,7 +57,8 @@ module.exports = ( devices, zoneConfig ) => {
 				zone.schedules.timers[ name ][ thing ] = {};
 				Object.keys( zone.schedules[ name ] )
 					.forEach( ( schedName ) => {
-						zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( zone.things[ thing ].button[ schedName ](), zone.schedules[ name ][ schedName ] );
+						let sched = zone.schedules[ name ][ schedName ];
+						zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( () => { zone.things[ thing ].button[ schedName ](); }, sched );
 					} );
 
 			} );
@@ -67,7 +68,7 @@ module.exports = ( devices, zoneConfig ) => {
 				.forEach( ( thing ) => {
 					Object.keys( zone.schedules.timers[ name ][ thing ] )
 						.forEach( ( schedName ) => {
-							later.clearInterval( zone.schedules.timers[ name ][ thing ][ schedName ] );
+							zone.schedules.timers[ name ][ thing ][ schedName ].clear();
 							delete zone.schedules.timers[ name ][ thing ][ schedName ];
 						} );
 					delete zone.schedules.timers[ name ][ thing ];
