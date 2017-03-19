@@ -44,12 +44,16 @@
     "schedules": {
       "light": {
         "referingTo": ["lightA"],
-        "on": [{
-          "h": [13]
-        }],
-        "off": [{
-          "h": [7]
-        }]
+        "on": {
+          "schedules": [{
+            "h": [13]
+          }]
+        },
+        "off": {
+          "schedules": [{
+            "h": [7]
+          }]
+        }
       }
     }
   }
