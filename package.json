@@ -27,6 +27,7 @@
     "beaglebone-dht": "0.0.3",
     "later": "^1.2.0",
     "moment": "^2.17.1",
-    "websockets": "^0.2.0"
+    "websockets": "^0.2.0",
+    "bonescript": "https://github.com/jgtaylor/bonescript"
   }
 }
