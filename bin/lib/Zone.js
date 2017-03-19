@@ -96,23 +96,24 @@ module.exports = ( devices, zoneConfig ) => {
 				{
 					Object.keys( zoneConfig.schedules )
 					.forEach( ( b ) => {
-						let me = zoneConfig.schedules[ b ];
 						zone.schedules[ b ] = {};
-						Object.keys( me )
+						Object.keys( zoneConfig.schedules[b] )
 							.forEach( ( c ) => {
 								// c = "on", "off"
 								if ( c !== "referingTo" ) {
 									// TODO: check that the keys are names for the device methods. - another day.
 									// can only work on buttons at this point :-(
-									me.referingTo.forEach( ( obj ) => {
-										if ( isValidMethod( zone[ obj ].button[ c ] ) || isValidMethod(
-												zone[ obj ].dimmer[ c ] || isValidMethod( zone[ obj ].virtual[ c ] ) ) ) {
-											zone.schedules[ b ][ c ] = later.schedule( me[ c ] );
+									zoneConfig.schedules[b].referingTo.forEach( ( obj ) => {
+										if ( isValidMethod( zone.things[ obj ].button[ c ] ) || isValidMethod(
+												zone.things[ obj ].dimmer[ c ] || isValidMethod( zone.things[ obj ].virtual[ c ] ) ) ) {
+											// zone.schedules[ b ][ c ] = later.schedule( zoneConfig.schedules[ b ][ c ] );
+											zone.schedules[ b ][ c ] = zoneConfig.schedules[ b ][ c ];
 										}
 									} );
 
 								}
 							} );
+						zone.schedules[ b ].referingTo = zoneConfig.schedules[ b ].referingTo;
 					} ); // end forEach(b)
 					break;
 				}
