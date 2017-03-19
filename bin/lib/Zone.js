@@ -29,59 +29,96 @@ module.exports = ( devices, zoneConfig ) => {
 	if ( !zoneConfig.zoneID ) {
 		zoneConfig.zoneID = guid();
 	}
+	zone.things = {
+		add: ( name, deviceUUID ) => {
+			// thing is an object { thingName: device-uuid }
+			if ( deviceUUID ) {
+				if ( devices.list()
+					.includes( deviceUUID ) ) {
+					zone.things[ name ] = devices.dev[ deviceUUID ];
+				}
+			} else {
+				zone.things[ name ] = 0;
+			}
+			return zone.emit( "added", name );
+		},
+		remove: ( name ) => {
+			return delete zone.things[ name ];
+		},
+		list: () => {
+			return Object.keys( zone.things );
+		}
+	};
+	zone.schedules = {
+		timers: {},
+		run: ( name ) => {
+			zone.schedules.timers[ name ] = {};
+			zone.schedules[ name ].referingTo.forEach( ( thing ) => {
+				zone.schedules.timers[ name ][ thing ] = {};
+				Object.keys( zone.schedules[ name ] )
+					.forEach( ( schedName ) => {
+						zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( zone.things[ thing ].button[ schedName ](), zone.schedules[ name ][ schedName ] );
+					} );
+
+			} );
+		},
+		stop: ( name ) => {
+			Object.keys( zone.schedules.timers[ name ] )
+				.forEach( ( thing ) => {
+					Object.keys( zone.schedules.timers[ name ][ thing ] )
+						.forEach( ( schedName ) => {
+							later.clearInterval( zone.schedules.timers[ name ][ thing ][ schedName ] );
+							delete zone.schedules.timers[ name ][ thing ][ schedName ];
+						} );
+					delete zone.schedules.timers[ name ][ thing ];
+				} );
+			delete zone.schedules.timers[ name ];
+		}
+	};
+	zone.monitors = {};
+	// use devices.query(zoneConfig[key]) to find it and load it.
+	// once devices.query() works.
 	Object.keys( zoneConfig )
 		.forEach( ( a ) => {
-			// use devices.query(zoneConfig[key]) to find it and load it.
-			// once devices.query() works.
-			if ( devices.list()
-				.includes( zoneConfig[ a ] ) ) {
-				zone[ a ] = devices.dev[ zoneConfig[ a ] ];
-			} else {
-				switch ( a ) {
-				case "schedules":
-					{
-						if ( !zone.schedules ) {
-							zone.schedules = {
-								timers: []
-							};
+			switch (a) {
+			case "things":
+				{
+					Object.keys( zoneConfig.things )
+					.forEach( ( a ) => {
+						if ( devices.list()
+							.includes( zoneConfig.things[ a ] ) ) {
+							zone.things[ a ] = devices.dev[ zoneConfig.things[ a ] ];
 						}
-						// times is an object of schedules.
-						Object.keys( zoneConfig.schedules )
-						.forEach( ( b ) => {
-							// zones.zone['uuid'].schedules.light || ...
-							//zone.schedules[el].
-							// build a schedule from the key.key ...
-							// el = light/fogger/pump, etc.
-							let me = zoneConfig.schedules[ b ];
-							zone.schedules[ b ] = {};
-							Object.keys( me )
-								.forEach( ( c ) => {
-									// c = "on", "off"
-									if ( c !== "referingTo" ) {
-										// TODO: check that the keys are names for the device methods. - another day.
-										// can only work on buttons at this point :-(
-										me.referingTo.forEach( ( obj ) => {
-											if ( isValidMethod( zone[ obj ].button[ c ] ) || isValidMethod(
-													zone[ obj ].dimmer[ c ] || isValidMethod( zone[ obj ].virtual[ c ] ) ) ) {
-												zone.schedules[ b ][ c ] = later.schedule( me[ c ] );
-											}
-										} );
-
-									}
-								} );
-							// 	// NEEDS TO MOVE! BADLY!!!!!! TODO: TODO: *******
-							// // now we create methods for dealing with the schedules.
-							// zone.schedules.start = ( sched, refMethod ) => {
-							// 	if ( zone.schedules.timers instanceof Array ) {
-							// 		zone.schedules.timers.push( later.setInterval( refMethod, sched ) );
-							// 	}
-							// };
-						} ); // end forEach(b)
-						break;
-					}
-				default: {
-					zone[ a ] = zoneConfig[ a ];
+					} );
+					break;
 				}
+			case "schedules":
+				{
+					Object.keys( zoneConfig.schedules )
+					.forEach( ( b ) => {
+						let me = zoneConfig.schedules[ b ];
+						zone.schedules[ b ] = {};
+						Object.keys( me )
+							.forEach( ( c ) => {
+								// c = "on", "off"
+								if ( c !== "referingTo" ) {
+									// TODO: check that the keys are names for the device methods. - another day.
+									// can only work on buttons at this point :-(
+									me.referingTo.forEach( ( obj ) => {
+										if ( isValidMethod( zone[ obj ].button[ c ] ) || isValidMethod(
+												zone[ obj ].dimmer[ c ] || isValidMethod( zone[ obj ].virtual[ c ] ) ) ) {
+											zone.schedules[ b ][ c ] = later.schedule( me[ c ] );
+										}
+									} );
+
+								}
+							} );
+					} ); // end forEach(b)
+					break;
+				}
+			default:
+				{
+					zone[ a ] = zoneConfig[ a ];
 				}
 			}
 		} );
