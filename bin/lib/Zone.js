@@ -36,17 +36,17 @@ module.exports = ( devices, zoneConfig ) => {
 			if ( devices.list()
 				.includes( zoneConfig[ a ] ) ) {
 				zone[ a ] = devices.dev[ zoneConfig[ a ] ];
-			}
-			switch ( a ) {
-			case "schedules":
-				{
-					if ( !zone.schedules ) {
-						zone.schedules = {
-							timers: []
-						};
-					}
+			} else {
+				switch ( a ) {
+				case "schedules":
+					{
+						if ( !zone.schedules ) {
+							zone.schedules = {
+								timers: []
+							};
+						}
 						// times is an object of schedules.
-					Object.keys( zoneConfig.schedules )
+						Object.keys( zoneConfig.schedules )
 						.forEach( ( b ) => {
 							// zones.zone['uuid'].schedules.light || ...
 							//zone.schedules[el].
@@ -61,8 +61,8 @@ module.exports = ( devices, zoneConfig ) => {
 										// TODO: check that the keys are names for the device methods. - another day.
 										// can only work on buttons at this point :-(
 										me.referingTo.forEach( ( obj ) => {
-											if ( isValidMethod( zone[obj].button[ c ] ) || isValidMethod(
-													zone[obj].dimmer[ c ] || isValidMethod( zone[obj].virtual[ c ] ) ) ) {
+											if ( isValidMethod( zone[ obj ].button[ c ] ) || isValidMethod(
+													zone[ obj ].dimmer[ c ] || isValidMethod( zone[ obj ].virtual[ c ] ) ) ) {
 												zone.schedules[ b ][ c ] = later.schedule( me[ c ] );
 											}
 										} );
@@ -72,14 +72,17 @@ module.exports = ( devices, zoneConfig ) => {
 							// now we create methods for dealing with the schedules.
 							zone.schedules.start = ( sched, refMethod ) => {
 								if ( zone.schedules.timers instanceof Array ) {
-									zone.schedules.timers.push(  later.setInterval( refMethod, sched ) );
+									zone.schedules.timers.push( later.setInterval( refMethod, sched ) );
 								}
 							};
 						} ); // end forEach(b)
-					break;
+						break;
+					}
+				default: {
+					zone[ a ] = zoneConfig[ a ];
+				}
 				}
 			}
-			zone[ a ] = zoneConfig[ a ];
 		} );
 	return zone;
 };
