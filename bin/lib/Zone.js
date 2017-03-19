@@ -46,13 +46,13 @@ module.exports = ( devices, zoneConfig ) => {
 						};
 					}
 						// times is an object of schedules.
-					Object.keys( zoneConfig[ a ].schedules )
+					Object.keys( zoneConfig.schedules )
 						.forEach( ( b ) => {
 							// zones.zone['uuid'].schedules.light || ...
 							//zone.schedules[el].
 							// build a schedule from the key.key ...
 							// el = light/fogger/pump, etc.
-							let me = zoneConfig[ a ].schedules[ b ];
+							let me = zoneConfig.schedules[ b ];
 							zone.schedules[ b ] = {};
 							Object.keys( me )
 								.forEach( ( c ) => {
