@@ -61,9 +61,8 @@ module.exports = ( devices, zoneConfig ) => {
 										// TODO: check that the keys are names for the device methods. - another day.
 										// can only work on buttons at this point :-(
 										me.referingTo.forEach( ( obj ) => {
-											let dev = zone[ obj ];
-											if ( isValidMethod( dev.button[ c ] ) || isValidMethod(
-													dev.dimmer[ c ] || isValidMethod( dev.virtual[ c ] ) ) ) {
+											if ( isValidMethod( zone[obj].button[ c ] ) || isValidMethod(
+													zone[obj].dimmer[ c ] || isValidMethod( zone[obj].virtual[ c ] ) ) ) {
 												zone.schedules[ b ][ c ] = later.schedule( me[ c ] );
 											}
 										} );
