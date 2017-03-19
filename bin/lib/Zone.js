@@ -69,12 +69,13 @@ module.exports = ( devices, zoneConfig ) => {
 
 									}
 								} );
-							// now we create methods for dealing with the schedules.
-							zone.schedules.start = ( sched, refMethod ) => {
-								if ( zone.schedules.timers instanceof Array ) {
-									zone.schedules.timers.push( later.setInterval( refMethod, sched ) );
-								}
-							};
+							// 	// NEEDS TO MOVE! BADLY!!!!!! TODO: TODO: *******
+							// // now we create methods for dealing with the schedules.
+							// zone.schedules.start = ( sched, refMethod ) => {
+							// 	if ( zone.schedules.timers instanceof Array ) {
+							// 		zone.schedules.timers.push( later.setInterval( refMethod, sched ) );
+							// 	}
+							// };
 						} ); // end forEach(b)
 						break;
 					}
