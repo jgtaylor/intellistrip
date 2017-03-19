@@ -5,8 +5,8 @@
         "fogger": "229fb8cd-dba7-9dd3-3f8f-544609b3fbdb",
         "tempHum": "715b8504-9ead-6c3c-3fce-313662441d64",
         "zoneID": "6cc7fae5-cca0-a520-ab5b-c1287cc090b1",
-        "times": {
-            "lightSchedules": {
+        "schedules": {
+            "light": {
                 "referingTo": ["lightA", "lightB"],
                 "on": {
                     "schedules": [{
@@ -19,7 +19,7 @@
                     }]
                 }
             },
-            "foggerSchedules": {
+            "fogger": {
                 "referingTo": ["fogger"],
                 "on": {
                     "schedules": [{
