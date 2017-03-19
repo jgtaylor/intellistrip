@@ -62,7 +62,7 @@
           }]
         }
       }
-    }
+    },
     "monitors": {
       "testKey": "zone2monitor"
     }
