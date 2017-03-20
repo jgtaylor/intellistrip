@@ -51,14 +51,27 @@ module.exports = ( devices, zoneConfig ) => {
 	};
 	zone.schedules = {
 		timers: {},
+		listRunning: () => {
+			return Object.keys(zone.schedules.timers);
+		},
+		list: () => {
+			return Object.keys(zone.schedules).filter( (val) => {
+				if ( (val == "timers") || (val == "listRunning") || (val == "list") || (val == "run") || (val == "stop") ) {
+					return false;
+				}
+				return val;
+			});
+		},
 		run: ( name ) => {
 			zone.schedules.timers[ name ] = {};
 			zone.schedules[ name ].referingTo.forEach( ( thing ) => {
 				zone.schedules.timers[ name ][ thing ] = {};
 				Object.keys( zone.schedules[ name ] )
 					.forEach( ( schedName ) => {
-						let sched = zone.schedules[ name ][ schedName ];
-						zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( () => { zone.things[ thing ].button[ schedName ](); }, sched );
+						if (schedName !== "referingTo") {
+							let sched = zone.schedules[ name ][ schedName ];
+							zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( () => { zone.things[ thing ].button[ schedName ](); }, sched );
+						}
 					} );
 
 			} );
