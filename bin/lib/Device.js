@@ -70,7 +70,9 @@ module.exports = ( devConfig ) => {
 					} );
 				},
 				read: () => {
-					return digitalRead( pin );
+					return digitalRead( pin, (d) => {
+						device.emit("read", d);
+					} );
 				},
 				status: () => {
 					let status = getPinMode( pin )
@@ -101,7 +103,11 @@ module.exports = ( devConfig ) => {
 			*/
 			device.dimmer = {
 				init: () => {
-					return;
+					if ( pinMode( pin, ANALOG_OUTPUT ) ) {
+						return device.emit( "init", getPinMode( pin )
+							.pwm );
+					}
+					return false;
 				},
 				set: ( value, freq ) => {
 					if ( freq ) {
