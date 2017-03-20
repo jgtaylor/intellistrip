@@ -8,25 +8,30 @@ var later = require( "later" ),
 	Zones = require( "./bin/lib/Zones" ),
 	devices = Devices(),
 	zones = Zones( devices );
-function logger(msg) {
+
+function logger( msg ) {
 	let now = new Date();
-	now = now.getMonth()+"/"+now.getDate()+" "+now.toTimeString();
-	console.log(now+" "+msg);
+	now = now.getMonth() + "/" + now.getDate() + " " + now.toTimeString();
+	console.log( now + " " + msg );
 }
 // we need to register listeners here...
 zones.list()
 	.forEach( ( z ) => {
 		Object.keys( zones.zone[ z ].things )
 			.forEach( ( t ) => {
-				if ( zones.zone[ z ].things[ t ].button ) {
+				let devType = zones.zone[ z ].things[t].deviceType;
+				if ( zones.zone[ z ].things[ t ].devType ) {
 					zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
-						logger( `${t} init: ${msg}` );
+						logger( t + " init: " );
+						logger( msg );
 					} );
 					zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
-						logger( `${t} state: ${msg}` );
+						logger( t + " state: " );
+						logger( msg );
 					} );
 					zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
-						logger( `${t} status: ${msg}` );
+						logger( t + " status: " );
+						logger( msg );
 					} );
 				}
 			} );
@@ -36,8 +41,9 @@ zones.list()
 	.forEach( ( z ) => {
 		Object.keys( zones.zone[ z ].things )
 			.forEach( ( t ) => {
-				if ( zones.zone[ z ].things[ t ].button ) {
-					zones.zone[ z ].things[ t ].button.init();
+				let devType = zones.zone[ z ].things[t].deviceType;
+				if ( zones.zone[ z ].things[ t ].devType ) {
+					zones.zone[ z ].things[ t ].devType.init();
 				}
 			} );
 	} );
@@ -49,8 +55,8 @@ zones.list()
 				zones.zone[ z ].schedules.run( sched );
 			} );
 		// we will start our monitors here, when monitors are here :-)
-		logger( `Completed startup for zone: ${zones.zone[z].zoneName}.`);
-		logger(`Schedule(s) ${zones.zone[ z ].schedules.listRunning().join(", ")} have been started.` );
+		logger( `Completed startup for zone: ${zones.zone[z].zoneName}.` );
+		logger( `Schedule(s) ${zones.zone[ z ].schedules.listRunning().join(", ")} have been started.` );
 	} );
 
 
