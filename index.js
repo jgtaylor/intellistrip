@@ -12,7 +12,7 @@ var later = require( "later" ),
 function logger( msg ) {
 	let now = new Date();
 	now = now.getMonth() + "/" + now.getDate() + " " + now.toTimeString();
-	console.log( now + " " + msg );
+	console.log( now + " " + JSON.stringify(msg) );
 }
 // we need to register listeners here...
 zones.list()
@@ -42,8 +42,8 @@ zones.list()
 		Object.keys( zones.zone[ z ].things )
 			.forEach( ( t ) => {
 				let devType = zones.zone[ z ].things[t].deviceType;
-				if ( zones.zone[ z ].things[ t ].devType ) {
-					zones.zone[ z ].things[ t ].devType.init();
+				if ( zones.zone[ z ].things[ t ][devType] ) {
+					zones.zone[ z ].things[ t ][devType].init();
 				}
 			} );
 	} );
