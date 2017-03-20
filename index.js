@@ -49,7 +49,8 @@ zones.list()
 				zones.zone[ z ].schedules.run( sched );
 			} );
 		// we will start our monitors here, when monitors are here :-)
-		console.log( `Completed startup for zone: ${zones.zone[z].zoneName}.\nSchedules, ${zones.zone[ z ].schedules.listRunning().join(", ")} have been started.` );
+		logger( `Completed startup for zone: ${zones.zone[z].zoneName}.`);
+		logger(`Schedule(s) ${zones.zone[ z ].schedules.listRunning().join(", ")} have been started.` );
 	} );
 
 
