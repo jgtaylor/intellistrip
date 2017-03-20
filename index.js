@@ -11,7 +11,7 @@ var later = require( "later" ),
 // start schedules
 zones.list()
 	.forEach( ( z ) => {
-		zones[ z ].schedules.list()
+		zones.zone[ z ].schedules.list()
 			.forEach( ( sched ) => {
 				zones.zone[ z ].schedules.run( sched );
 			} );
