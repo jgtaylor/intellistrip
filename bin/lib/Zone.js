@@ -52,29 +52,37 @@ module.exports = ( devices, zoneConfig ) => {
 	zone.schedules = {
 		timers: {},
 		listRunning: () => {
-			return Object.keys(zone.schedules.timers);
+			return Object.keys( zone.schedules.timers );
 		},
 		list: () => {
-			return Object.keys(zone.schedules).filter( (val) => {
-				if ( (val == "timers") || (val == "listRunning") || (val == "list") || (val == "run") || (val == "stop") ) {
-					return false;
-				}
-				return val;
-			});
+			return Object.keys( zone.schedules )
+				.filter( ( val ) => {
+					if ( ( val == "timers" ) || ( val == "listRunning" ) || ( val == "list" ) || ( val == "run" ) || ( val == "stop" ) ) {
+						return false;
+					}
+					return val;
+				} );
 		},
 		run: ( name ) => {
-			zone.schedules.timers[ name ] = {};
-			zone.schedules[ name ].referingTo.forEach( ( thing ) => {
-				zone.schedules.timers[ name ][ thing ] = {};
-				Object.keys( zone.schedules[ name ] )
-					.forEach( ( schedName ) => {
-						if (schedName !== "referingTo") {
-							let sched = zone.schedules[ name ][ schedName ];
-							zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( () => { zone.things[ thing ].button[ schedName ](); }, sched );
-						}
-					} );
+			if ( zone.schedules.list()
+				.includes( name ) ) {
+				zone.schedules.timers[ name ] = {};
+				zone.schedules[ name ].referingTo.forEach( ( thing ) => {
+					zone.schedules.timers[ name ][ thing ] = {};
+					Object.keys( zone.schedules[ name ] )
+						.forEach( ( schedName ) => {
+							if ( schedName !== "referingTo" ) {
+								let sched = zone.schedules[ name ][ schedName ];
+								zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( () => {
+									zone.things[ thing ].button[ schedName ]();
+								}, sched );
+							}
+						} );
 
-			} );
+				} );
+			} else {
+				return false;
+			}
 		},
 		stop: ( name ) => {
 			Object.keys( zone.schedules.timers[ name ] )
@@ -94,7 +102,7 @@ module.exports = ( devices, zoneConfig ) => {
 	// once devices.query() works.
 	Object.keys( zoneConfig )
 		.forEach( ( a ) => {
-			switch (a) {
+			switch ( a ) {
 			case "things":
 				{
 					Object.keys( zoneConfig.things )
@@ -111,13 +119,13 @@ module.exports = ( devices, zoneConfig ) => {
 					Object.keys( zoneConfig.schedules )
 					.forEach( ( b ) => {
 						zone.schedules[ b ] = {};
-						Object.keys( zoneConfig.schedules[b] )
+						Object.keys( zoneConfig.schedules[ b ] )
 							.forEach( ( c ) => {
 								// c = "on", "off"
 								if ( c !== "referingTo" ) {
 									// TODO: check that the keys are names for the device methods. - another day.
 									// can only work on buttons at this point :-(
-									zoneConfig.schedules[b].referingTo.forEach( ( obj ) => {
+									zoneConfig.schedules[ b ].referingTo.forEach( ( obj ) => {
 										if ( isValidMethod( zone.things[ obj ].button[ c ] ) || isValidMethod(
 												zone.things[ obj ].dimmer[ c ] || isValidMethod( zone.things[ obj ].virtual[ c ] ) ) ) {
 											// zone.schedules[ b ][ c ] = later.schedule( zoneConfig.schedules[ b ][ c ] );
