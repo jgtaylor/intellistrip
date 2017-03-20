@@ -20,7 +20,7 @@ zones.list()
 		Object.keys( zones.zone[ z ].things )
 			.forEach( ( t ) => {
 				let devType = zones.zone[ z ].things[t].deviceType;
-				if ( zones.zone[ z ].things[ t ].devType ) {
+				if ( zones.zone[ z ].things[ t ][devType] ) {
 					zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
 						logger( t + " init: " );
 						logger( msg );
