@@ -4,19 +4,21 @@ var later = require( "later" ),
 	moment = require( "moment" ),
 	websockets = require( "websockets" ),
 	Devices = require( "./bin/lib/Devices" ),
-	Zones = require("./bin/lib/Zones"),
+	Zones = require( "./bin/lib/Zones" ),
 	devices = Devices(),
-	zones = Zones(devices);
+	zones = Zones( devices );
 
 // start schedules
-zones.list().forEach( (z) => {
-	zones[z].schedules.list().forEach(( sched ) => {
-		zones[z].schedules.run(sched);
-	});
-	console.log(zones[z].schedules.listRunning());
-});
+zones.list()
+	.forEach( ( z ) => {
+		zones[ z ].schedules.list()
+			.forEach( ( sched ) => {
+				zones.zone[ z ].schedules.run( sched );
+			} );
+		console.log( zones.zone[ z ].schedules.listRunning() );
+	} );
 
-console.log(zones);
+console.log( zones );
 
 // get the logical layout
 //var zones = Zones(); // NOT WHAT I WANT, but i don't know what i want :-(
