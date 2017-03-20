@@ -74,8 +74,8 @@ module.exports = ( devices, zoneConfig ) => {
 							if ( schedName !== "referingTo" ) {
 								let sched = zone.schedules[ name ][ schedName ];
 								zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( () => {
-									let dType = zone.things[thing].deviceType;
-									zone.things[ thing ][dType][ schedName ]();
+									let dType = zone.things[ thing ].deviceType;
+									zone.things[ thing ][ dType ][ schedName ]();
 								}, sched );
 							}
 						} );
@@ -124,11 +124,9 @@ module.exports = ( devices, zoneConfig ) => {
 							.forEach( ( c ) => {
 								// c = "on", "off"
 								if ( c !== "referingTo" ) {
-									// TODO: check that the keys are names for the device methods. - another day.
-									// can only work on buttons at this point :-(
 									zoneConfig.schedules[ b ].referingTo.forEach( ( obj ) => {
-										if ( isValidMethod( zone.things[ obj ].button[ c ] ) || isValidMethod(
-												zone.things[ obj ].dimmer[ c ] || isValidMethod( zone.things[ obj ].virtual[ c ] ) ) ) {
+										let dType = zone.things[ obj ].deviceType;
+										if ( isValidMethod( zone.things[ obj ][ dType ][ c ] ) ) {
 											// zone.schedules[ b ][ c ] = later.schedule( zoneConfig.schedules[ b ][ c ] );
 											zone.schedules[ b ][ c ] = zoneConfig.schedules[ b ][ c ];
 										}
