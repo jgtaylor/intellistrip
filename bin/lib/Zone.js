@@ -74,7 +74,8 @@ module.exports = ( devices, zoneConfig ) => {
 							if ( schedName !== "referingTo" ) {
 								let sched = zone.schedules[ name ][ schedName ];
 								zone.schedules.timers[ name ][ thing ][ schedName ] = later.setInterval( () => {
-									zone.things[ thing ].button[ schedName ]();
+									let dType = zone.things[thing].deviceType;
+									zone.things[ thing ][dType][ schedName ]();
 								}, sched );
 							}
 						} );
