@@ -1,14 +1,19 @@
 "use strict";
 //var db = require("./bin/lib/influxdbHandler");
-const later = require( "later" ),
+var later = require( "later" ),
 	moment = require( "moment" ),
 	websockets = require( "websockets" ),
 	Devices = require( "./bin/lib/Devices" ),
-	Zones = require("./bin/lib/Zones");
+	Zones = require("./bin/lib/Zones"),
+	devices = Devices(),
+	zones = Zones(devices);
 
-// get the devices available
-var devices = Devices();
-var zones = Zones(devices);
+// start schedules
+zones.list().forEach( (z) => {
+	z.schedules.list().forEach(( sched ) => {
+		z.schedules.run(sched);
+	});
+});
 
 console.log(zones);
 
