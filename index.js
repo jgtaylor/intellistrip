@@ -8,7 +8,11 @@ var later = require( "later" ),
 	Zones = require( "./bin/lib/Zones" ),
 	devices = Devices(),
 	zones = Zones( devices );
-
+function logger(msg) {
+	let now = new Date();
+	now = now.getMonth()+"/"+now.getDate()+" "+now.toTimeString();
+	console.log(now+" "+msg);
+}
 // we need to register listeners here...
 zones.list()
 	.forEach( ( z ) => {
@@ -16,13 +20,13 @@ zones.list()
 			.forEach( ( t ) => {
 				if ( zones.zone[ z ].things[ t ].button ) {
 					zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
-						console.log( `${t} init: ${msg}` );
+						logger( `${t} init: ${msg}` );
 					} );
 					zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
-						console.log( `${t} state: ${msg}` );
+						logger( `${t} state: ${msg}` );
 					} );
 					zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
-						console.log( `${t} status: ${msg}` );
+						logger( `${t} status: ${msg}` );
 					} );
 				}
 			} );
@@ -32,8 +36,7 @@ zones.list()
 	.forEach( ( z ) => {
 		Object.keys( zones.zone[ z ].things )
 			.forEach( ( t ) => {
-				if ( Object.keys( zones.zone[ z ].things[ t ].button )
-					.includes( "init" ) ) {
+				if ( zones.zone[ z ].things[ t ].button ) {
 					zones.zone[ z ].things[ t ].button.init();
 				}
 			} );
