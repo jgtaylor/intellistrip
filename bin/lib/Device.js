@@ -49,7 +49,7 @@ module.exports = ( devConfig ) => {
 					return false;
 				},
 				toggle: () => {
-					let currentState = digitalRead( pin, ( e, d ) => {
+					let currentState = digitalRead( pin, ( d ) => {
 						if ( d === LOW ) {
 							if ( digitalWrite( pin, HIGH ) ) {
 								device.emit( "state", {
