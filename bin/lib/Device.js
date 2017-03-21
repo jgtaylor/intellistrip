@@ -131,6 +131,19 @@ module.exports = ( devConfig ) => {
 			should be described so that a device.read() is backed by something like:
 			read: i2cObject.sendCmd('0x43'), or whatever the i2c command is.
 			*/
+			device.virtual = {
+				[devConfig.deviceModel]: {},
+				init: () => {
+					device[devConfig.deviceModel] = require(devConfig.deviceModule);
+					let dev = device[devConfig.deviceModel];
+					dev.sensor(devConfig.deviceModel);
+					return device;
+				},
+				read: () => {
+					let dev = device[device.deviceModel];
+					device.emit("read", dev.read( pin ));
+				}
+			};
 			break;
 		}
 	default:
