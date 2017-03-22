@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/jgtaylor/intellistrip#readme",
   "dependencies": {
-    "beaglebone-dht": "0.0.3",
+    "beaglebone-dht": "https://github.com/jgtaylor/beaglebone-dht",
     "later": "^1.2.0",
     "moment": "^2.17.1",
     "websockets": "^0.2.0",
