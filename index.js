@@ -21,18 +21,30 @@ zones.list()
 			.forEach( ( t ) => {
 				let devType = zones.zone[ z ].things[ t ].deviceType;
 				if ( zones.zone[ z ].things[ t ][ devType ] ) {
-					zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
-						logger( t + " init: " );
-						logger( msg );
-					} );
-					zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
-						logger( t + " state: " );
-						logger( msg );
-					} );
-					zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
-						logger( t + " status: " );
-						logger( msg );
-					} );
+					if ( zones.zone[ z ].things[ t ].validCmds.includes( "init" ) ) {
+						zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
+							logger( t + " init: " );
+							logger( msg );
+						} );
+					}
+					if ( zones.zone[ z ].things[ t ].validCmds.includes( "state" ) ) {
+						zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
+							logger( t + " state: " );
+							logger( msg );
+						} );
+					}
+					if ( zones.zone[ z ].things[ t ].validCmds.includes( "status" ) ) {
+						zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
+							logger( t + " status: " );
+							logger( msg );
+						} );
+					}
+					if ( zones.zone[ z ].things[ t ].validCmds.includes( "read" ) ) {
+						zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
+							logger( t + " read: " );
+							logger( msg );
+						} );
+					}
 				}
 			} );
 	} );
