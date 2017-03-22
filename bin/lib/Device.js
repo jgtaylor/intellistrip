@@ -135,7 +135,6 @@ module.exports = ( devConfig ) => {
 				init: () => {
 					device[devConfig.deviceModel] = require(devConfig.deviceModule);
 					let dev = device[devConfig.deviceModel];
-					dev.sensor(devConfig.deviceModel);
 					return device;
 				},
 				read: () => {
