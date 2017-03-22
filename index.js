@@ -58,15 +58,3 @@ zones.list()
 		logger( `Completed startup for zone: ${zones.zone[z].zoneName}.` );
 		logger( `Schedule(s) ${zones.zone[ z ].schedules.listRunning().join(", ")} have been started.` );
 	} );
-
-
-
-// get the logical layout
-//var zones = Zones(); // NOT WHAT I WANT, but i don't know what i want :-(
-//zones[0].lights.on.schedule()
-//zones[0].lights.off.schedule()
-//zones[0].pumpX.on.schedule()
-//zones[0].monitor("temp")
-//zones[0].monitor("humidity")
-//zones[0].monitor("lights")
-//zones[0].monitor("water")
