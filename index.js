@@ -21,25 +21,25 @@ zones.list()
 			.forEach( ( t ) => {
 				let devType = zones.zone[ z ].things[ t ].deviceType;
 				if ( zones.zone[ z ].things[ t ][ devType ] ) {
-					if ( zones.zone[ z ].things[ t ].validCmds.includes( "init" ) ) {
+					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "init" ) ) {
 						zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
 							logger( t + " init: " );
 							logger( msg );
 						} );
 					}
-					if ( zones.zone[ z ].things[ t ].validCmds.includes( "state" ) ) {
+					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "state" ) ) {
 						zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
 							logger( t + " state: " );
 							logger( msg );
 						} );
 					}
-					if ( zones.zone[ z ].things[ t ].validCmds.includes( "status" ) ) {
+					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "status" ) ) {
 						zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
 							logger( t + " status: " );
 							logger( msg );
 						} );
 					}
-					if ( zones.zone[ z ].things[ t ].validCmds.includes( "read" ) ) {
+					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "read" ) ) {
 						zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
 							logger( t + " read: " );
 							logger( msg );
