@@ -132,7 +132,6 @@ module.exports = ( devConfig ) => {
 			read: i2cObject.sendCmd('0x43'), or whatever the i2c command is.
 			*/
 			device.virtual = {
-				[devConfig.deviceModel]: {},
 				init: () => {
 					device[devConfig.deviceModel] = require(devConfig.deviceModule);
 					let dev = device[devConfig.deviceModel];
