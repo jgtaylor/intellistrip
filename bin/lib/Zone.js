@@ -1,8 +1,8 @@
 "use strict";
 /* eslint no-console: "off", no-unused-vars: "off" */
 /* this is a module, it should return an array of devices */
-const EventEmitter = require( "events" ),
-	later = require( "later" );
+const EventEmitter = require( "events" );
+var later = require( "later" );
 
 function guid() {
 	return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
@@ -46,7 +46,10 @@ module.exports = ( devices, zoneConfig ) => {
 			return delete zone.things[ name ];
 		},
 		list: () => {
-			return Object.keys( zone.things );
+			return Object.keys( zone.things )
+				.filter( ( el ) => {
+					return !( isValidMethod( el ) );
+				} );
 		}
 	};
 	zone.schedules = {
