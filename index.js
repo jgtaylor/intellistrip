@@ -24,6 +24,8 @@ zones.list()
 
 				if ( !( zones.zone[ z ].things[ t ] instanceof EventEmitter ) ) {
 					logger( "ERROR: " + zones.zone[ z ].things[ t ] );
+					logger( "== DETAIL: thing = " + t );
+					logger( "== DETAIL: zone = " + z );
 				} else {
 
 					zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
@@ -43,7 +45,7 @@ zones.list()
 						logger( msg );
 					} );
 				}
-				
+
 			} );
 	} );
 // we should initialize zone devices with an init() method.
