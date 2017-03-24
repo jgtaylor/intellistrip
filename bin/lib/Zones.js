@@ -73,7 +73,7 @@ module.exports = ( devices, config ) => {
 						default:
 							{
 								let thing = zones.zone[el][k];
-								if ( (thing instanceof events.EventEmitter) && (thing.deviceID) ) {
+								if ( (thing instanceof EventEmitter) && (thing.deviceID) ) {
 									j[k] = thing.deviceID;
 									break;
 								}
