@@ -1,7 +1,8 @@
 "use strict";
 /* eslint no-unused-vars: "off", no-console: "off" */
 //var db = require("./bin/lib/influxdbHandler");
-var later = require( "later" ),
+var EventEmitter = require( "events" ),
+	later = require( "later" ),
 	moment = require( "moment" ),
 	websockets = require( "websockets" ),
 	Devices = require( "./bin/lib/Devices" ),
@@ -11,7 +12,7 @@ var later = require( "later" ),
 
 function logger( msg ) {
 	let now = new Date();
-	now = now.getMonth() + "/" + now.getDate() + " " + now.getHours()+":"+now.getMinutes()+":"+now.getSeconds()+":"+now.getMilliseconds();
+	now = now.getMonth() + "/" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + ":" + now.getMilliseconds();
 	console.log( now + " " + JSON.stringify( msg ) );
 }
 // we need to register listeners here...
@@ -20,22 +21,29 @@ zones.list()
 		Object.keys( zones.zone[ z ].things )
 			.forEach( ( t ) => {
 				let devType = zones.zone[ z ].things[ t ].deviceType;
-				zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
-					logger( t + " init: " );
-					logger( msg );
-				} );
-				zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
-					logger( t + " state: " );
-					logger( msg );
-				} );
-				zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
-					logger( t + " status: " );
-					logger( msg );
-				} );
-				zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
-					logger( t + " read: " );
-					logger( msg );
-				} );
+
+				if ( !( zones.zone[ z ].things[ t ] instanceof EventEmitter ) ) {
+					logger( "ERROR: " + zones.zone[ z ].things[ t ] );
+				} else {
+
+					zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
+						logger( t + " init: " );
+						logger( msg );
+					} );
+					zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
+						logger( t + " state: " );
+						logger( msg );
+					} );
+					zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
+						logger( t + " status: " );
+						logger( msg );
+					} );
+					zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
+						logger( t + " read: " );
+						logger( msg );
+					} );
+				}
+				
 			} );
 	} );
 // we should initialize zone devices with an init() method.
