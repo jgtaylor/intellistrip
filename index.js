@@ -18,7 +18,7 @@ function logger( msg ) {
 // we need to register listeners here...
 zones.list()
 	.forEach( ( z ) => {
-		Object.keys( zones.zone[ z ].things )
+		zones.zone[ z ].things.list()
 			.forEach( ( t ) => {
 				let devType = zones.zone[ z ].things[ t ].deviceType;
 
