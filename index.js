@@ -11,8 +11,8 @@ var later = require( "later" ),
 
 function logger( msg ) {
 	let now = new Date();
-	now = now.getMonth() + "/" + now.getDate() + " " + now.toTimeString();
-	console.log( now + " " + JSON.stringify( msg, null, 3 ) );
+	now = now.getMonth() + "/" + now.getDate() + " " + now.getHours()+":"+now.getMinutes()+":"+now.getSeconds()+":"+now.getMilliseconds();
+	console.log( now + " " + JSON.stringify( msg ) );
 }
 // we need to register listeners here...
 zones.list()
