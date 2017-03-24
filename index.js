@@ -20,32 +20,22 @@ zones.list()
 		Object.keys( zones.zone[ z ].things )
 			.forEach( ( t ) => {
 				let devType = zones.zone[ z ].things[ t ].deviceType;
-				if ( zones.zone[ z ].things[ t ][ devType ] ) {
-					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "init" ) ) {
-						zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
-							logger( t + " init: " );
-							logger( msg );
-						} );
-					}
-					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "state" ) ) {
-						zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
-							logger( t + " state: " );
-							logger( msg );
-						} );
-					}
-					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "status" ) ) {
-						zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
-							logger( t + " status: " );
-							logger( msg );
-						} );
-					}
-					if ( zones.zone[ z ].things[ t ].deviceCmds.includes( "read" ) ) {
-						zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
-							logger( t + " read: " );
-							logger( msg );
-						} );
-					}
-				}
+				zones.zone[ z ].things[ t ].on( "init", ( msg ) => {
+					logger( t + " init: " );
+					logger( msg );
+				} );
+				zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
+					logger( t + " state: " );
+					logger( msg );
+				} );
+				zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
+					logger( t + " status: " );
+					logger( msg );
+				} );
+				zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
+					logger( t + " read: " );
+					logger( msg );
+				} );
 			} );
 	} );
 // we should initialize zone devices with an init() method.
