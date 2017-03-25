@@ -48,7 +48,7 @@ module.exports = ( devices, zoneConfig ) => {
 		list: () => {
 			return Object.keys( zone.things )
 				.filter( ( el ) => {
-					return !( isValidMethod( el ) );
+					return ( typeof zone.things[el] !== "function" );
 				} );
 		}
 	};
