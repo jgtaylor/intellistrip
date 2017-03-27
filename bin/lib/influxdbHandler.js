@@ -2,7 +2,7 @@ module.exports = (msg, opt) => {
 	let http = require( "http" );
 	if (!opt) {
 		var options = {
-			hostname: "automation.local",
+			hostname: "localhost",
 			port: 8086,
 			path: "/write?db=environ",
 			method: "POST",
@@ -14,6 +14,9 @@ module.exports = (msg, opt) => {
 	let req = function () {
 		return http.request( options, function ( res ) {
 			res.setEncoding( "utf8" );
+			res.on("statusCode", (msg) => {
+				console.log(`Status: ${msg}`);
+			} );
 			res.on( "data", function ( body ) {
 				console.log( "Body: " + body );
 			} );
