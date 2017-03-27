@@ -8,7 +8,8 @@ var EventEmitter = require( "events" ),
 	Devices = require( "./bin/lib/Devices" ),
 	Zones = require( "./bin/lib/Zones" ),
 	devices = Devices(),
-	zones = Zones( devices );
+	zones = Zones( devices ),
+	influx = require( "./bin/lib/influxdbHandler" );
 
 function logger( msg ) {
 	let now = new Date();
@@ -33,6 +34,9 @@ zones.list()
 						logger( msg );
 					} );
 					zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
+						let data = influx(
+							`${t},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z}" val=${msg.state}`
+						);
 						logger( t + " state: " );
 						logger( msg );
 					} );
@@ -41,6 +45,12 @@ zones.list()
 						logger( msg );
 					} );
 					zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
+						// {"celsius":"22.7","fahrenheit":"72.9","humidity":"38.5"}
+						// "fan,uuid=nice_fan,zone=bloom_tent value=" + fspd;
+						let data = influx(
+							`${zones.zone[z].things[t].meta.outputs[0].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[0].unit}" val=${msg.celsius}\n` +
+							`${zones.zone[z].things[t].meta.outputs[1].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[1].metric}" val=${msg.humidity}`
+						);
 						logger( t + " read: " );
 						logger( msg );
 					} );
