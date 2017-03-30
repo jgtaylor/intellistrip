@@ -47,10 +47,12 @@ zones.list()
 					zones.zone[ z ].things[ t ].on( "read", ( msg ) => {
 						// {"celsius":"22.7","fahrenheit":"72.9","humidity":"38.5"}
 						// "fan,uuid=nice_fan,zone=bloom_tent value=" + fspd;
-						let data = influx(
-							`${zones.zone[z].things[t].meta.outputs[0].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[0].unit}" val=${msg.celsius}\n` +
-							`${zones.zone[z].things[t].meta.outputs[1].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[1].metric}" val=${msg.humidity}`
-						);
+						if ( msg.celsius ) {
+							let data = influx(
+								`${zones.zone[z].things[t].meta.outputs[0].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[0].unit}" val=${msg.celsius}\n` +
+								`${zones.zone[z].things[t].meta.outputs[1].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[1].metric}" val=${msg.humidity}`
+							);
+						}
 						// logger( t + " read: " );
 						// logger( msg );
 					} );
