@@ -2,7 +2,7 @@ module.exports = (msg, opt) => {
 	let http = require( "http" );
 	if (!opt) {
 		var options = {
-			hostname: "localhost",
+			hostname: "192.168.0.2",
 			port: 8086,
 			path: "/write?db=environ",
 			method: "POST",
