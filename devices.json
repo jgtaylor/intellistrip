@@ -1,4 +1,5 @@
-[{
+[
+    {
         "deviceID": "635c943a-6b8a-7b22-32e1-1a397411c2c6",
         "deviceType": "button",
         "deviceModule": "native",
@@ -158,10 +159,11 @@
             "init"
         ],
         "deviceModule": "beaglebone-dht",
-        "devicePin": "P9_21",
+        "devicePin": "P9_15",
         "deviceModel": "DHT22",
         "meta": {
-            "outputs": [{
+            "outputs": [
+                {
                     "metric": "Temperature",
                     "unit": "C",
                     "accuracy": "+0.5"
@@ -172,7 +174,38 @@
                     "accuracy": "5%"
                 }
             ],
-            "validRange": [-40,
+            "validRange": [
+                -40,
+                85
+            ],
+            "Desctription": "Temperature & Humidity Sensor"
+        }
+    },
+    {
+        "deviceID": "0055b333-0171-0588-12c8-2decea4ae35a",
+        "deviceType": "virtual",
+        "deviceCmds": [
+            "read",
+            "init"
+        ],
+        "deviceModule": "beaglebone-dht",
+        "devicePin": "P9_23",
+        "deviceModel": "DHT22",
+        "meta": {
+            "outputs": [
+                {
+                    "metric": "Temperature",
+                    "unit": "C",
+                    "accuracy": "+0.5"
+                },
+                {
+                    "metric": "Humidity",
+                    "unit": "%RH",
+                    "accuracy": "5%"
+                }
+            ],
+            "validRange": [
+                -40,
                 85
             ],
             "Desctription": "Temperature & Humidity Sensor"
