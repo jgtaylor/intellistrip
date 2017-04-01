@@ -38,7 +38,7 @@
         "referingTo": ["tempHum"],
         "read": {
           "schedules": [{
-            "m": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]
+            "s": [1, 11, 21, 31, 41, 51]
           }]
         }
       }
@@ -52,8 +52,9 @@
     "zoneID": "64eea9d2-b669-bf1b-aa82-2a914aaba78a",
     "things": {
       "lightA": "dee8d3ff-995e-f968-514c-9caff255bea3",
-      "fanA": "f1c522b1-dd66-e2d8-2e84-5e920f40bce4",
-      "fanExhaust": "73807a3a-179e-b1bf-2f22-4c8eb80d98b2"
+      "mainPump": "f1c522b1-dd66-e2d8-2e84-5e920f40bce4",
+      "circulationPump": "73807a3a-179e-b1bf-2f22-4c8eb80d98b2",
+      "tempHum": "0055b333-0171-0588-12c8-2decea4ae35a"
     },
     "schedules": {
       "light": {
@@ -66,6 +67,27 @@
         "off": {
           "schedules": [{
             "h": [7]
+          }]
+        }
+      },
+      "pump": {
+        "referingTo": ["mainPump"],
+        "on": {
+          "schedules": [{
+            "m": [0]
+          }]
+        },
+        "off": {
+          "schedules": [{
+            "m": [7]
+          }]
+        }
+      },
+      "temp": {
+        "referingTo": ["tempHum"],
+        "read": {
+          "schedules": [{
+            "s": [0, 10, 20, 30, 40, 50]
           }]
         }
       }
