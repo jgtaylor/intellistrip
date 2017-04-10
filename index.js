@@ -12,7 +12,7 @@ var EventEmitter = require( "events" ),
 	influx = require( "./bin/lib/influxdbHandler" );
 
 function logger( msg ) {
-	console.log( moment(moment.now()).format("LLL") + " " + JSON.stringify( msg ) );
+	console.log( moment(moment.now()).format("L HH:mm:ss:SSS") + " " + JSON.stringify( msg ) );
 }
 // we need to register listeners here...
 zones.list()
