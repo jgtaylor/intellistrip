@@ -1,6 +1,4 @@
 "use strict";
-/* eslint no-console: "off", no-unused-vars: "off" */
-/* this is a module, it should return an array of devices */
 const EventEmitter = require( "events" );
 var later = require( "later" );
 
@@ -11,13 +9,13 @@ function guid() {
 
 function s4() {
 	return Math.floor( ( 1 + Math.random() ) * 0x10000 )
-		.toString( 16 )
-		.substring( 1 );
+        .toString( 16 )
+        .substring( 1 );
 }
 
 function camelCase( str ) {
 	return str.charAt( 0 )
-		.toUpperCase() + str.slice( 1 );
+        .toUpperCase() + str.slice( 1 );
 }
 
 function isValidMethod( fn ) {

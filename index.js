@@ -1,6 +1,4 @@
 "use strict";
-/* eslint no-unused-vars: "off", no-console: "off" */
-//var db = require("./bin/lib/influxdbHandler");
 var EventEmitter = require( "events" ),
 	later = require( "later" ),
 	moment = require( "moment" ),
@@ -12,7 +10,8 @@ var EventEmitter = require( "events" ),
 	influx = require( "./bin/lib/influxdbHandler" );
 
 function logger( msg ) {
-	console.log( moment(moment.now()).format("L HH:mm:ss:SSS") + " " + JSON.stringify( msg ) );
+	console.log( moment( moment.now() )
+		.format( "L HH:mm:ss:SSS" ) + " " + JSON.stringify( msg ) );
 }
 // we need to register listeners here...
 zones.list()
@@ -33,10 +32,7 @@ zones.list()
 					} );
 					zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
 						let data = influx(
-							`${t},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z}" val=${msg.state}`
-						);
-						// logger( t + " state: " );
-						// logger( msg );
+							`${t},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z}" val=${msg.state}` );
 					} );
 					zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
 						logger( t + " status: " );
@@ -51,13 +47,11 @@ zones.list()
 								`${zones.zone[z].things[t].meta.outputs[1].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[1].metric}" val=${msg.humidity}`
 							);
 						}
-						// logger( t + " read: " );
-						// logger( msg );
 					} );
 				}
 			} );
 	} );
-// we should initialize zone devices with an init() method.
+// we should initialize zone devices with an init() method. need querry working.
 zones.list()
 	.forEach( ( z ) => {
 		Object.keys( zones.zone[ z ].things )

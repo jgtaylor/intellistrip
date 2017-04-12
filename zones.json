@@ -13,12 +13,14 @@
         "on": {
           "schedules": [{
             "h": [13]
-          }]
+          }],
+          "duration": "PT18H"
         },
         "off": {
           "schedules": [{
             "h": [7]
-          }]
+          }],
+          "duration": "PT6H"
         }
       },
       "fogger": {
@@ -38,13 +40,18 @@
         "referingTo": ["tempHum"],
         "read": {
           "schedules": [{
-            "s": [1, 11, 21, 31, 41, 51]
+            "s": [5, 15, 25, 35, 45, 55]
           }]
         }
       }
     },
     "monitors": {
-      "testKey": "fake_monitor"
+      "humidity": {
+        "expression": "celcius > 32"
+      },
+      "temperature": {
+
+      }
     }
   },
   {

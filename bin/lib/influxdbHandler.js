@@ -1,6 +1,6 @@
-module.exports = (msg, opt) => {
+module.exports = ( msg, opt ) => {
 	let http = require( "http" );
-	if (!opt) {
+	if ( !opt ) {
 		var options = {
 			hostname: "192.168.0.2",
 			port: 8086,
@@ -11,20 +11,20 @@ module.exports = (msg, opt) => {
 			}
 		};
 	}
-	let req = function () {
-		return http.request( options, function ( res ) {
+	let req = function() {
+		return http.request( options, function( res ) {
 			res.setEncoding( "utf8" );
-			res.on("statusCode", (msg) => {
-				console.log(`Status: ${msg}`);
+			res.on( "statusCode", ( msg ) => {
+				console.log( `Status: ${msg}` );
 			} );
-			res.on( "data", function ( body ) {
+			res.on( "data", function( body ) {
 				console.log( "Body: " + body );
 			} );
 		} );
 	};
 
 	var hReq = req();
-	hReq.on( "error", function ( e ) {
+	hReq.on( "error", function( e ) {
 		console.log( e );
 	} );
 	hReq.write( msg );

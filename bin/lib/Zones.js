@@ -1,6 +1,4 @@
 "use strict";
-/* eslint no-console: "off", no-unused-vars: "off" */
-/* this is a module, it should return an array of devices */
 const fs = require( "fs" ),
 	EventEmitter = require( "events" ),
 	Zone = require( "./Zone" );
@@ -11,11 +9,11 @@ module.exports = ( devices, config ) => {
 
 	zones.add = ( config ) => {
 		// should look like { zoneID: "xxxx", deviceType: enum:[button, dimmer, virtual]}
-		if (!config) {
-			return new Error("no config passed in.");
+		if ( !config ) {
+			return new Error( "no config passed in." );
 		}
-		if (!zones.zone[config.zoneID]) {
-			let zone = Zone(devices, config);
+		if ( !zones.zone[config.zoneID] ) {
+			let zone = Zone( devices, config );
 			zones.zone[zone.zoneID] = zone;
 			zones.emit( "added", zone );
 			return zones;
@@ -73,7 +71,7 @@ module.exports = ( devices, config ) => {
 						default:
 							{
 								let thing = zones.zone[el][k];
-								if ( (thing instanceof EventEmitter) && (thing.deviceID) ) {
+								if ( ( thing instanceof EventEmitter ) && ( thing.deviceID ) ) {
 									j[k] = thing.deviceID;
 									break;
 								}
@@ -105,8 +103,8 @@ module.exports = ( devices, config ) => {
 		let configData = JSON.parse( fs.readFileSync( "zones.json", "utf-8" ) );
 		if ( configData instanceof Array ) {
 			configData.forEach( ( zoneConfig ) => {
-				zones.add(zoneConfig);
-			});
+				zones.add( zoneConfig );
+			} );
 			return zones;
 		}
 		return zones;
