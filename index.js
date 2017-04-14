@@ -18,7 +18,7 @@ zones.list()
 	.forEach( ( z ) => {
 		zones.zone[ z ].things.list()
 			.forEach( ( t ) => {
-				let devType = zones.zone[ z ].things[ t ].deviceType;
+				// let devType = zones.zone[ z ].things[ t ].deviceType;
 
 				if ( !( zones.zone[ z ].things[ t ] instanceof EventEmitter ) ) {
 					logger( "ERROR: " + zones.zone[ z ].things[ t ] );
@@ -33,6 +33,7 @@ zones.list()
 					zones.zone[ z ].things[ t ].on( "state", ( msg ) => {
 						let data = influx(
 							`${t},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z}" val=${msg.state}` );
+						if ( data ) { console.log( data ); }
 					} );
 					zones.zone[ z ].things[ t ].on( "status", ( msg ) => {
 						logger( t + " status: " );
@@ -46,6 +47,7 @@ zones.list()
 								`${zones.zone[z].things[t].meta.outputs[0].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[0].unit}" val=${msg.celsius}\n` +
 								`${zones.zone[z].things[t].meta.outputs[1].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[1].metric}" val=${msg.humidity}`
 							);
+							if ( data ) { console.log( data ); }
 						}
 					} );
 				}
