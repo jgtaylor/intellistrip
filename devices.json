@@ -159,7 +159,7 @@
             "init"
         ],
         "deviceModule": "beaglebone-dht",
-        "devicePin": "P9_15",
+        "devicePin": "P9_13",
         "deviceModel": "DHT22",
         "meta": {
             "outputs": [
