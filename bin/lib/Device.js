@@ -1,6 +1,4 @@
 "use strict";
-/* eslint no-console: "off", no-unused-vars: "off", no-undef: "off" */
-/* this is a module, it should return an array of devices */
 const EventEmitter = require( "events" );
 
 function guid() {
@@ -10,8 +8,8 @@ function guid() {
 
 function s4() {
 	return Math.floor( ( 1 + Math.random() ) * 0x10000 )
-		.toString( 16 )
-		.substring( 1 );
+        .toString( 16 )
+        .substring( 1 );
 }
 
 module.exports = ( devConfig ) => {
@@ -70,8 +68,8 @@ module.exports = ( devConfig ) => {
 					} );
 				},
 				read: () => {
-					return digitalRead( pin, (d) => {
-						device.emit("read", d);
+					return digitalRead( pin, ( d ) => {
+						device.emit( "read", d );
 					} );
 				},
 				status: () => {
@@ -113,11 +111,11 @@ module.exports = ( devConfig ) => {
 					if ( freq ) {
 						return analogWrite( pin, value, freq );
 					} else {
-						return analogWrite(pin, value, 2000);
+						return analogWrite( pin, value, 2000 );
 					}
 				},
-				get: (pin) => {
-					return getPinMode(pin).pwm;
+				get: ( pin ) => {
+					return getPinMode( pin ).pwm;
 				}
 			};
 			break;
@@ -133,13 +131,13 @@ module.exports = ( devConfig ) => {
 			*/
 			device.virtual = {
 				init: () => {
-					device[devConfig.deviceModel] = require(devConfig.deviceModule);
+					device[devConfig.deviceModel] = require( devConfig.deviceModule );
 					let dev = device[devConfig.deviceModel];
 					return device;
 				},
 				read: () => {
 					let dev = device[device.deviceModel];
-					device.emit("read", dev.read( pin ));
+					device.emit( "read", dev.read( pin ) );
 				}
 			};
 			break;

@@ -179,36 +179,226 @@
                 85
             ],
             "Desctription": "Temperature & Humidity Sensor"
-        }
-    },
-    {
-        "deviceID": "0055b333-0171-0588-12c8-2decea4ae35a",
-        "deviceType": "virtual",
-        "deviceCmds": [
-            "read",
-            "init"
-        ],
-        "deviceModule": "beaglebone-dht",
-        "devicePin": "P9_23",
-        "deviceModel": "DHT22",
-        "meta": {
-            "outputs": [
-                {
-                    "metric": "Temperature",
-                    "unit": "C",
-                    "accuracy": "+0.5"
-                },
-                {
-                    "metric": "Humidity",
-                    "unit": "%RH",
-                    "accuracy": "5%"
-                }
-            ],
-            "validRange": [
-                -40,
-                85
-            ],
-            "Desctription": "Temperature & Humidity Sensor"
-        }
+=======
+[{
+    "deviceID": "635c943a-6b8a-7b22-32e1-1a397411c2c6",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_8",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
     }
+  },
+  {
+    "deviceID": "1157249c-3713-f1e7-7a66-b666d3307061",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_10",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
+    }
+  },
+  {
+    "deviceID": "229fb8cd-dba7-9dd3-3f8f-544609b3fbdb",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_12",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
+    }
+  },
+  {
+    "deviceID": "dee8d3ff-995e-f968-514c-9caff255bea3",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_14",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
+    }
+  },
+  {
+    "deviceID": "f1c522b1-dd66-e2d8-2e84-5e920f40bce4",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_16",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
+    }
+  },
+  {
+    "deviceID": "73807a3a-179e-b1bf-2f22-4c8eb80d98b2",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_7",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
+    }
+  },
+  {
+    "deviceID": "a6aa7183-5920-9aa0-cb7a-16bd59720d32",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_9",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
+    }
+  },
+  {
+    "deviceID": "0acf1392-dadd-8f5b-1331-2e7a5f55381f",
+    "deviceType": "button",
+    "deviceModule": "native",
+    "deviceCmds": [
+      "on",
+      "off",
+      "toggle",
+      "read",
+      "status",
+      "init"
+    ],
+    "devicePin": "P8_11",
+    "meta": {
+      "buttonType": "Mains Relay",
+      "limits": "10A/250AC 20A/120AC",
+      "description": "Simple switch"
+    }
+  },
+  {
+    "deviceID": "715b8504-9ead-6c3c-3fce-313662441d64",
+    "deviceType": "virtual",
+    "deviceCmds": [
+      "read",
+      "init"
+    ],
+    "deviceModule": "beaglebone-dht",
+    "devicePin": "P9_15",
+    "deviceModel": "DHT22",
+    "meta": {
+      "outputs": {
+        "celsius": {
+          "metric": "Temperature",
+          "unit": "C",
+          "accuracy": "+0.5",
+          "validRange": {
+            "max": 85,
+            "min": -40
+          }
+        },
+        "humidity": {
+          "metric": "Humidity",
+          "unit": "%RH",
+          "accuracy": "5%",
+          "validRange": {
+            "max": 100,
+            "min": 0
+          }
+>>>>>>> 1edccd9fad4b869fb01c67b088110d7f9baa344c
+        }
+      },
+      "Desctription": "Temperature & Humidity Sensor"
+    }
+  },
+  {
+    "deviceID": "0055b333-0171-0588-12c8-2decea4ae35a",
+    "deviceType": "virtual",
+    "deviceCmds": [
+      "read",
+      "init"
+    ],
+    "deviceModule": "beaglebone-dht",
+    "devicePin": "P9_23",
+    "deviceModel": "DHT22",
+    "meta": {
+      "outputs": {
+        "celsius": {
+          "metric": "Temperature",
+          "unit": "C",
+          "accuracy": "+0.5",
+          "validRange": {
+            "max": 85,
+            "min": -40
+          }
+        },
+        "humidity": {
+          "metric": "Humidity",
+          "unit": "%RH",
+          "accuracy": "5%",
+          "validRange": {
+            "max": 100,
+            "min": 0
+          }
+        }
+      },
+      "Desctription": "Temperature & Humidity Sensor"
+    }
+  }
 ]
