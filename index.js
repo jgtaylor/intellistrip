@@ -44,8 +44,8 @@ zones.list()
 						// "fan,uuid=nice_fan,zone=bloom_tent value=" + fspd;
 						if ( msg ) {
 							let data = influx(
-								`${zones.zone[z].things[t].meta.outputs[0].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[0].unit}" val=${msg.celsius}\n` +
-								`${zones.zone[z].things[t].meta.outputs[1].metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs[1].metric}" val=${msg.humidity}`
+								`${zones.zone[z].things[t].meta.outputs.celsius.metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs.celsius.unit}" val=${msg.celsius}\n` +
+								`${zones.zone[z].things[t].meta.outputs.humidity.metric},uuid=${zones.zone[z].things[t].deviceID},zone=${zones.zone[z].zoneName},zoneID=${z},unit="${zones.zone[z].things[t].meta.outputs.humidity.metric}" val=${msg.humidity}`
 							);
 							if ( data ) { console.log( data ); }
 						}
