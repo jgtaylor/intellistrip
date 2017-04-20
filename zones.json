@@ -18,7 +18,7 @@
 				},
 				"off": {
 					"schedules": [{
-						"h": [8]
+						"h": [6]
 					}],
 					"duration": "PT6H"
 				}
